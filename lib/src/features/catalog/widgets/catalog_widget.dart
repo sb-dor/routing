@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routing/src/common/routing/app_navigator.dart';
 import 'package:routing/src/features/category/widgets/category_widgets.dart';
 
 class CatalogWidget extends StatefulWidget {
@@ -19,15 +20,18 @@ class _CatalogWidgetState extends State<CatalogWidget> {
         children: [
           TextButton(
             onPressed: () {
-              Navigator.push(
+              AppNavigator.change(
                 context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return CategoryWidgets(
-                      category: 'plumbings',
-                    );
-                  },
-                ),
+                (pages) {
+                  // use previous pages if you want or add new pages to stack
+                  return [
+                    ...pages, // using prev pages
+                    MaterialPage(
+                      key: ValueKey<String>("Category#plumbings"),
+                      child: CategoryWidgets(category: "Plumbings"),
+                    ),
+                  ];
+                },
               );
             },
             child: Text("Plumbings"),

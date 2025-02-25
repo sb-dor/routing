@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routing/src/common/routing/app_navigator.dart';
 import 'package:routing/src/features/product/widgets/product_widgets.dart';
 
 class CategoryWidgets extends StatefulWidget {
@@ -31,11 +32,18 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
               return ListTile(
                 title: Text("Sub category: $subcategoryId"),
                 onTap: () {
-                  Navigator.push(
+                  AppNavigator.change(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => CategoryWidgets(category: subcategoryId),
-                    ),
+                    (pages) {
+                      // use previous pages if you want or add new pages to stack
+                      return [
+                        ...pages, // using prev pages
+                        MaterialPage(
+                          key: ValueKey<String>("sub_category#$subcategoryId"),
+                          child: CategoryWidgets(category: subcategoryId),
+                        ),
+                      ];
+                    },
                   );
                 },
               );
