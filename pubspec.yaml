@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   octopus: ^0.0.9
   l: ^5.0.0
+  meta: ^1.15.0
 
 dev_dependencies:
   flutter_test:

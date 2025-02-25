@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:l/l.dart';
+import 'package:routing/src/features/catalog/widgets/catalog_widget.dart';
 
 void main() => runZonedGuarded(
       () {
@@ -23,14 +24,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Routing"),
-        ),
-        body: Column(
-          children: [],
-        ),
-      ),
+      home: CatalogWidget(),
     );
   }
 }
