@@ -41,6 +41,7 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
                         MaterialPage(
                           key: ValueKey<String>("sub_category#$subcategoryId"),
                           child: CategoryWidgets(category: subcategoryId),
+                          name: "sub_category#$subcategoryId",
                         ),
                       ];
                     },
@@ -59,15 +60,23 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
           SliverList.builder(
             itemCount: 10,
             itemBuilder: (context, index) {
-              final categoryId = widget.category.hashCode + index;
+              final productId = widget.category.hashCode + index;
               return ListTile(
                 title: Text("Product: $index"),
                 onTap: () {
-                  Navigator.push(
+                  AppNavigator.change(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ProductWidgets(productId: categoryId),
-                    ),
+                    (pages) {
+                      // use previous pages if you want or add new pages to stack
+                      return [
+                        ...pages, // using prev pages
+                        MaterialPage(
+                          key: ValueKey<String>("product#$productId"),
+                          child: ProductWidgets(productId: productId),
+                          name: "screen:$productId",
+                        ),
+                      ];
+                    },
                   );
                 },
               );

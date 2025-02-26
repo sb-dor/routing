@@ -10,6 +10,15 @@ class CatalogWidget extends StatefulWidget {
 }
 
 class _CatalogWidgetState extends State<CatalogWidget> {
+  // state will be saved event if navigator changes, if pages change in stack
+  int _counter = 1;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +38,7 @@ class _CatalogWidgetState extends State<CatalogWidget> {
                     MaterialPage(
                       key: ValueKey<String>("Category#plumbings"),
                       child: CategoryWidgets(category: "Plumbings"),
+                      name: "Plumbings",
                     ),
                   ];
                 },
@@ -38,33 +48,48 @@ class _CatalogWidgetState extends State<CatalogWidget> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.push(
+              AppNavigator.change(
                 context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return CategoryWidgets(
-                      category: 'Portables',
-                    );
-                  },
-                ),
+                (pages) {
+                  // use previous pages if you want or add new pages to stack
+                  return [
+                    ...pages, // using prev pages
+                    MaterialPage(
+                      key: ValueKey<String>("Category#portables"),
+                      child: CategoryWidgets(category: "Portables"),
+                      name: "Portables",
+                    ),
+                  ];
+                },
               );
             },
             child: Text("Portables"),
           ),
           TextButton(
             onPressed: () {
-              Navigator.push(
+              AppNavigator.change(
                 context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return CategoryWidgets(
-                      category: 'electronics',
-                    );
-                  },
-                ),
+                (pages) {
+                  // use previous pages if you want or add new pages to stack
+                  return [
+                    ...pages, // using prev pages
+                    MaterialPage(
+                        key: ValueKey<String>("Category#electronics"),
+                        child: CategoryWidgets(category: "Electronics"),
+                        name: "Electronics"),
+                  ];
+                },
               );
             },
             child: Text("Electronics"),
+          ),
+          TextButton(
+            onPressed: () {
+              _increment();
+            },
+            child: Text(
+              "$_counter",
+            ),
           ),
         ],
       ),
