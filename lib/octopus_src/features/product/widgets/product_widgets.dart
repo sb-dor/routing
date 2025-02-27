@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
 import 'package:routing/src/common/routing/app_navigator.dart';
 
 class ProductWidgets extends StatefulWidget {
@@ -38,26 +39,19 @@ class _ProductWidgetsState extends State<ProductWidgets> {
       body: Center(
         child: Builder(
           builder: (context) {
-            final pages = AppNavigator.allPages(context);
+            final pages = Octopus.maybeOf(context)?.history ?? [];
             return Wrap(
+              spacing: 10,
               children: pages.mapIndexed((index, page) {
                 return TextButton(
                   onPressed: () {
-                    AppNavigator.change(
-                      context,
-                      (pages) {
-                        List<Page<Object?>> newPages = [];
-                        for (int i = 0; i < pages.length; i++) {
-                          newPages.add(pages[i]);
-                          if (pages[i].key == page.key) {
-                            break;
-                          }
-                        }
-                        return newPages;
-                      },
-                    );
+                    // Octopus.maybeOf(context)?.setState(
+                    //   (state) {
+                    //     return state..findAllByName(page.state.uri.path);
+                    //   },
+                    // );
                   },
-                  child: Text((page.key as ValueKey<String>).value),
+                  child: Text(page.state.uri.path),
                 );
               }).toList(),
             );

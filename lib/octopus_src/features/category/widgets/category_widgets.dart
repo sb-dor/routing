@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
+import 'package:routing/octopus_src/common/routing/routes.dart';
 import 'package:routing/octopus_src/features/product/widgets/product_widgets.dart';
 import 'package:routing/src/common/routing/app_navigator.dart';
 
@@ -32,20 +34,32 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
               return ListTile(
                 title: Text("Sub category: $subcategoryId"),
                 onTap: () {
-                  AppNavigator.change(
-                    context,
-                    (pages) {
-                      // use previous pages if you want or add new pages to stack
-                      return [
-                        ...pages, // using prev pages
-                        MaterialPage(
-                          key: ValueKey<String>("sub_category#$subcategoryId"),
-                          child: CategoryWidgets(category: subcategoryId),
-                          name: "sub_category#$subcategoryId",
-                        ),
-                      ];
+                  Octopus.maybeOf(context)?.setState(
+                    (states) {
+                      return states
+                        ..add(
+                          AppRoute.category.node(
+                            arguments: {
+                              "categoryId": subcategoryId,
+                            },
+                          ),
+                        );
                     },
                   );
+                  // AppNavigator.change(
+                  //   context,
+                  //   (pages) {
+                  //     // use previous pages if you want or add new pages to stack
+                  //     return [
+                  //       ...pages, // using prev pages
+                  //       MaterialPage(
+                  //         key: ValueKey<String>("sub_category#$subcategoryId"),
+                  //         child: CategoryWidgets(category: subcategoryId),
+                  //         name: "sub_category#$subcategoryId",
+                  //       ),
+                  //     ];
+                  //   },
+                  // );
                 },
               );
             },
@@ -64,20 +78,30 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
               return ListTile(
                 title: Text("Product: $index"),
                 onTap: () {
-                  AppNavigator.change(
-                    context,
-                    (pages) {
-                      // use previous pages if you want or add new pages to stack
-                      return [
-                        ...pages, // using prev pages
-                        MaterialPage(
-                          key: ValueKey<String>("product#$productId"),
-                          child: ProductWidgets(productId: productId),
-                          name: "screen:$productId",
-                        ),
-                      ];
+                  Octopus.maybeOf(context)?.setState(
+                    (states) {
+                      return states
+                        ..add(
+                          AppRoute.product.node(
+                            arguments: {"productId": productId.toString()},
+                          ),
+                        );
                     },
                   );
+                  // AppNavigator.change(
+                  //   context,
+                  //   (pages) {
+                  //     // use previous pages if you want or add new pages to stack
+                  //     return [
+                  //       ...pages, // using prev pages
+                  //       MaterialPage(
+                  //         key: ValueKey<String>("product#$productId"),
+                  //         child: ProductWidgets(productId: productId),
+                  //         name: "screen:$productId",
+                  //       ),
+                  //     ];
+                  //   },
+                  // );
                 },
               );
             },
