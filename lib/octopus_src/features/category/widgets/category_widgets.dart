@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:routing/octopus_src/features/product/widgets/product_widgets.dart';
 import 'package:routing/src/common/routing/app_navigator.dart';
-import 'package:routing/src/features/product/widgets/product_widgets.dart';
 
 class CategoryWidgets extends StatefulWidget {
   const CategoryWidgets({

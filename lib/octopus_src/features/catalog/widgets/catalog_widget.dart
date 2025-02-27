@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:routing/src/common/routing/app_navigator.dart';
-import 'package:routing/src/features/category/widgets/category_widgets.dart';
+import 'package:octopus/octopus.dart';
+import 'package:routing/octopus_src/common/routing/routes.dart';
+import 'package:routing/octopus_src/features/category/widgets/category_widgets.dart';
 
 class CatalogWidget extends StatefulWidget {
   const CatalogWidget({super.key});
@@ -19,6 +20,21 @@ class _CatalogWidgetState extends State<CatalogWidget> {
     });
   }
 
+  void _pushCategory(BuildContext context, String categoryId) {
+    Octopus.maybeOf(context)?.setState(
+      (state) {
+        return state
+          ..add(
+            AppRoute.category.node(
+              arguments: {
+                'categoryId': categoryId,
+              },
+            ),
+          );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,57 +45,19 @@ class _CatalogWidgetState extends State<CatalogWidget> {
         children: [
           TextButton(
             onPressed: () {
-              AppNavigator.change(
-                context,
-                (pages) {
-                  // use previous pages if you want or add new pages to stack
-                  return [
-                    ...pages, // using prev pages
-                    MaterialPage(
-                      key: ValueKey<String>("Category#plumbings"),
-                      child: CategoryWidgets(category: "Plumbings"),
-                      name: "Plumbings",
-                    ),
-                  ];
-                },
-              );
+              _pushCategory(context, "Plumbings");
             },
             child: Text("Plumbings"),
           ),
           TextButton(
             onPressed: () {
-              AppNavigator.change(
-                context,
-                (pages) {
-                  // use previous pages if you want or add new pages to stack
-                  return [
-                    ...pages, // using prev pages
-                    MaterialPage(
-                      key: ValueKey<String>("Category#portables"),
-                      child: CategoryWidgets(category: "Portables"),
-                      name: "Portables",
-                    ),
-                  ];
-                },
-              );
+              _pushCategory(context, "Portables");
             },
             child: Text("Portables"),
           ),
           TextButton(
             onPressed: () {
-              AppNavigator.change(
-                context,
-                (pages) {
-                  // use previous pages if you want or add new pages to stack
-                  return [
-                    ...pages, // using prev pages
-                    MaterialPage(
-                        key: ValueKey<String>("Category#electronics"),
-                        child: CategoryWidgets(category: "Electronics"),
-                        name: "Electronics"),
-                  ];
-                },
-              );
+              _pushCategory(context, "Electronics");
             },
             child: Text("Electronics"),
           ),

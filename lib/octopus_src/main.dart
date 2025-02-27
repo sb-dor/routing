@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:octopus/octopus.dart';
 import 'package:flutter/material.dart';
 import 'package:l/l.dart';
+import 'package:routing/octopus_src/common/routing/routes.dart';
 
 void main() => runZonedGuarded(
       () {
@@ -35,7 +36,7 @@ mixin AppRoutingWithOctopus on State<App> {
   void initState() {
     super.initState();
     _octopus = Octopus(
-      routes: [],
+      routes: AppRoute.values,
     );
   }
 }

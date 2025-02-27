@@ -17,8 +17,8 @@ enum AppRoute with OctopusRoute {
   @override
   Widget builder(
     BuildContext context,
-    OctopusState state,
-    OctopusNode node,
+    OctopusState state, // https://youtu.be/bIst8LmnrAk?t=5710
+    OctopusNode node, // https://youtu.be/bIst8LmnrAk?t=5985
   ) {
     return switch (this) {
       AppRoute.catalog => CatalogWidget(),
