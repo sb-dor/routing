@@ -94,7 +94,7 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
       routes: AppRoute.values,
       defaultRoute: AppRoute.catalog,
       guards: [
-        OwnAuthenticationGuardWithSignInNavigation(
+        OwnAuthenticationGuard(
           // Get current user from authentication controller.
           getUser: () async => context.read<AuthController>().user,
           // Available routes for non authenticated user.
@@ -106,10 +106,9 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
             AppRoute.product.name // only product screen is for authenticated users. Guarded route
           },
           // Default route for non authenticated user.
-          signingNavigation: OctopusState.single(AppRoute.authentication.node()),
+          signInNavigation: OctopusState.single(AppRoute.authentication.node()),
           homeNavigation: OctopusState.single(AppRoute.catalog.node()),
           refresh: context.read<AuthController>(),
-          sharedPrefer: SharedPreferencesHelper(widget.sharedPreferences),
         ),
       ],
     );

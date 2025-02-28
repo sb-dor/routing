@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
+import 'package:routing/octopus_src/common/routing/routes.dart';
 
 /// A router guard that checks if the user is authenticated.
 ///
@@ -11,27 +12,13 @@ class OwnAuthenticationGuard extends OctopusGuard {
   OwnAuthenticationGuard({
     required FutureOr<User> Function() getUser,
     required Set<String> guardedRoutes,
-    required OctopusState signingNavigation,
+    required OctopusState signInNavigation,
     required OctopusState homeNavigation,
-    OctopusState? lastNavigation,
     super.refresh,
   })  : _getUser = getUser,
         _guardedRoutes = guardedRoutes,
-        _lastNavigation = lastNavigation ?? homeNavigation,
-        _signingNavigation = signingNavigation {
-    // Get the last navigation from the platform default route.
-    if (lastNavigation == null) {
-      try {
-        final platformDefault = WidgetsBinding.instance.platformDispatcher.defaultRouteName;
-        final state = OctopusState.fromLocation(platformDefault);
-        if (state.isNotEmpty) {
-          _lastNavigation = state;
-        }
-      } on Object {
-        /* ignore */
-      }
-    }
-  }
+        _signInNavigation = signInNavigation,
+        _homeNavigation = homeNavigation;
 
   /// Get the current user.
   final FutureOr<User> Function() _getUser;
@@ -39,11 +26,9 @@ class OwnAuthenticationGuard extends OctopusGuard {
   /// Routes names that stand for the authentication routes.
   final Set<String> _guardedRoutes;
 
-  /// The navigation to use when the user is not authenticated.
-  final OctopusState _signingNavigation;
+  final OctopusState _signInNavigation;
 
-  /// The navigation to use when the user is authenticated.
-  OctopusState _lastNavigation;
+  final OctopusState _homeNavigation;
 
   // logic works in this way: when you want to navigate to specific route which was added
   // inside guarded routes,
@@ -65,8 +50,14 @@ class OwnAuthenticationGuard extends OctopusGuard {
     );
 
     if (user.isNotAuthenticated && hasGuardedRoutes) {
-      state.removeWhere((element) => _guardedRoutes.contains(element.name));
-      return state;
+      return _signInNavigation;
+    }
+
+    if (user.isAuthenticated &&
+        state.isNotEmpty &&
+        state.children.length == 1 &&
+        state.children.first.name == AppRoute.authentication.name) {
+      return _homeNavigation;
     }
 
     return state;

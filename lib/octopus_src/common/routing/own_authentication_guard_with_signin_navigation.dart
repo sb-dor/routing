@@ -10,6 +10,8 @@ import 'package:routing/octopus_src/common/shared_preferences_helper/shared_pref
 ///
 /// you can rewrite this logic of checking by your own code here
 /// Guard that does not allow to navigate to another route until user authenticates
+///
+/// NOT GOOD ENOUGH!
 class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
   OwnAuthenticationGuardWithSignInNavigation({
     required FutureOr<User> Function() getUser,
@@ -67,9 +69,11 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
     final lastNavigation = _sharedPreferencesHelper.getString("last_navigation");
 
     if (lastNavigation != null) {
-      print("last nav: $lastNavigation");
+      print("last nav: $lastNavigation | $state");
       await _sharedPreferencesHelper.deleteString("last_navigation");
-      return OctopusState.fromJson(jsonDecode(lastNavigation)); // Return the stored value
+      state.removeWhere((element) => element.name == AppRoute.authentication.name);
+      print("last nav 2: $lastNavigation | $state");
+      return state; // Return the stored value
     }
 
     return state;
