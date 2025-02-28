@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
+import 'package:provider/provider.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
+import 'package:routing/octopus_src/features/auth/controllers/auth_controller.dart';
 import 'package:routing/octopus_src/features/category/widgets/category_widgets.dart';
 
 class CatalogWidget extends StatefulWidget {
@@ -40,6 +42,22 @@ class _CatalogWidgetState extends State<CatalogWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Catalog widget"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.read<AuthController>().logout();
+            },
+            child: Text("Log out"),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<AuthController>().authenticate(
+                    navigate: () {},
+                  );
+            },
+            child: Text("Log in"),
+          ),
+        ],
       ),
       body: ListView(
         children: [
@@ -67,7 +85,9 @@ class _CatalogWidgetState extends State<CatalogWidget> {
                 (states) {
                   return states
                     ..add(
-                      AppRoute.product.node(),
+                      AppRoute.product.node(
+                        arguments: {"productId": "123"},
+                      ),
                     );
                 },
               );

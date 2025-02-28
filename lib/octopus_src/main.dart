@@ -2,7 +2,25 @@ import 'dart:async';
 import 'package:octopus/octopus.dart';
 import 'package:flutter/material.dart';
 import 'package:l/l.dart';
+import 'package:provider/provider.dart';
+import 'package:routing/octopus_src/common/models/user.dart';
+import 'package:routing/octopus_src/common/routing/authentication_guard.dart';
+import 'package:routing/octopus_src/common/routing/products_guard.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
+import 'package:routing/octopus_src/features/auth/controllers/auth_controller.dart';
+
+import 'common/routing/own_authentication_guard.dart';
+
+// more info for configuring routes:
+
+// Route mixin
+// https://github.com/PlugFox/octopus/blob/master/example/lib/src/common/router/router_state_mixin.dart
+
+// AuthenticationGuard
+// https://github.com/PlugFox/octopus/blob/master/example/lib/src/common/router/authentication_guard.dart
+
+// user
+// https://github.com/PlugFox/octopus/blob/master/example/lib/src/feature/authentication/model/user.dart
 
 void main() => runZonedGuarded(
       () {
@@ -13,23 +31,39 @@ void main() => runZonedGuarded(
       },
     );
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> with AppRoutingWithOctopus {
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _octopus.config, // coming from mixin
+    return ChangeNotifierProvider(
+      create: (_) => AuthController(),
+      child: _AppConfig(),
     );
   }
 }
 
-mixin AppRoutingWithOctopus on State<App> {
+class _AppConfig extends StatefulWidget {
+  const _AppConfig({super.key});
+
+  @override
+  State<_AppConfig> createState() => _AppConfigState();
+}
+
+class _AppConfigState extends State<_AppConfig> with _AppRoutingWithOctopus {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: _octopus.config, // coming from mixin
+      builder: (context, child) => OctopusTools(
+        // for development
+        child: child!,
+      ),
+    );
+  }
+}
+
+mixin _AppRoutingWithOctopus on State<_AppConfig> {
   late final Octopus _octopus;
 
   @override
@@ -37,6 +71,24 @@ mixin AppRoutingWithOctopus on State<App> {
     super.initState();
     _octopus = Octopus(
       routes: AppRoute.values,
+      defaultRoute: AppRoute.catalog,
+      guards: [
+        OwnAuthenticationGuard(
+          // Get current user from authentication controller.
+          getUser: () async => context.read<AuthController>().user,
+          // Available routes for non authenticated user.
+          // in with these routes non authenticated user can navigate to
+          routes: {
+            AppRoute.catalog.name,
+            AppRoute.category.name,
+            // AppRoute.product.name  // only product screen is for authenticated users
+          },
+          // Default route for non authenticated user.
+          signingNavigation: OctopusState.single(AppRoute.authentication.node()),
+          homeNavigation: OctopusState.single(AppRoute.catalog.node()),
+          refresh: context.read<AuthController>(),
+        ),
+      ],
     );
   }
 }

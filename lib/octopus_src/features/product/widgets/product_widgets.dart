@@ -68,7 +68,7 @@ class _ProductWidgetsState extends State<ProductWidgets> {
                     //   },
                     // );
                   },
-                  child: Text(page.state.uri.path),
+                  child: Text(page.state.location),
                 );
               }).toList(),
             );

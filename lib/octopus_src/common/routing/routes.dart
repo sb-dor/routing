@@ -1,5 +1,6 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:octopus/octopus.dart';
+import 'package:routing/octopus_src/features/auth/widgets/authentication_screen.dart';
 import 'package:routing/octopus_src/features/catalog/widgets/catalog_widget.dart';
 import 'package:routing/octopus_src/features/category/widgets/category_widgets.dart';
 import 'package:routing/octopus_src/features/product/widgets/product_widgets.dart';
@@ -7,7 +8,8 @@ import 'package:routing/octopus_src/features/product/widgets/product_widgets.dar
 enum AppRoute with OctopusRoute {
   catalog('catalog'),
   category("category"),
-  product("product");
+  product("product"),
+  authentication("authentication");
 
   const AppRoute(this.name);
 
@@ -24,6 +26,7 @@ enum AppRoute with OctopusRoute {
       AppRoute.catalog => CatalogWidget(),
       AppRoute.category => CategoryWidgets(category: node.arguments['categoryId'].toString()),
       AppRoute.product => ProductWidgets(productId: int.parse("${node.arguments['productId']}")),
+      AppRoute.authentication => AuthenticationScreen(),
     };
   }
 }
