@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TodoWidget extends StatefulWidget {
-  const TodoWidget({super.key});
+  const TodoWidget({
+    super.key,
+    required this.todoId,
+  });
+
+  final String todoId;
 
   @override
   State<TodoWidget> createState() => _TodoWidgetState();
