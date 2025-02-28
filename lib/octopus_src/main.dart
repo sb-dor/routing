@@ -94,7 +94,7 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
       routes: AppRoute.values,
       defaultRoute: AppRoute.catalog,
       guards: [
-        OwnAuthenticationGuard(
+        OwnAuthenticationGuardWithSignInNavigation(
           // Get current user from authentication controller.
           getUser: () async => context.read<AuthController>().user,
           // Available routes for non authenticated user.

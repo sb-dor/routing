@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
@@ -8,8 +7,8 @@ import 'package:routing/octopus_src/common/routing/routes.dart';
 ///
 /// you can rewrite this logic of checking by your own code here
 /// Guard that does not allow to navigate to another route until user authenticates
-class OwnAuthenticationGuardWithSigninNavigation extends OctopusGuard {
-  OwnAuthenticationGuardWithSigninNavigation({
+class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
+  OwnAuthenticationGuardWithSignInNavigation({
     required FutureOr<User> Function() getUser,
     required Set<String> guardedRoutes,
     required OctopusState signInNavigation,
@@ -60,7 +59,7 @@ class OwnAuthenticationGuardWithSigninNavigation extends OctopusGuard {
         state.isNotEmpty &&
         state.children.length == 1 &&
         state.children.first.name == AppRoute.authentication.name) {
-      return _lastNavigation!;
+      return _lastNavigation ?? _homeNavigation;
     }
 
     return state;
