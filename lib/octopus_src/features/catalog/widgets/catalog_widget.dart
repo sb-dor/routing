@@ -63,6 +63,21 @@ class _CatalogWidgetState extends State<CatalogWidget> {
           ),
           TextButton(
             onPressed: () {
+              Octopus.maybeOf(context)?.setState(
+                (states) {
+                  return states
+                    ..add(
+                      AppRoute.product.node(),
+                    );
+                },
+              );
+            },
+            child: Text(
+              "Products directly",
+            ),
+          ),
+          TextButton(
+            onPressed: () {
               _increment();
             },
             child: Text(

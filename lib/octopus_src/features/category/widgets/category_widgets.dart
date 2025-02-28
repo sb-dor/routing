@@ -46,20 +46,6 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
                         );
                     },
                   );
-                  // AppNavigator.change(
-                  //   context,
-                  //   (pages) {
-                  //     // use previous pages if you want or add new pages to stack
-                  //     return [
-                  //       ...pages, // using prev pages
-                  //       MaterialPage(
-                  //         key: ValueKey<String>("sub_category#$subcategoryId"),
-                  //         child: CategoryWidgets(category: subcategoryId),
-                  //         name: "sub_category#$subcategoryId",
-                  //       ),
-                  //     ];
-                  //   },
-                  // );
                 },
               );
             },
@@ -88,20 +74,6 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
                         );
                     },
                   );
-                  // AppNavigator.change(
-                  //   context,
-                  //   (pages) {
-                  //     // use previous pages if you want or add new pages to stack
-                  //     return [
-                  //       ...pages, // using prev pages
-                  //       MaterialPage(
-                  //         key: ValueKey<String>("product#$productId"),
-                  //         child: ProductWidgets(productId: productId),
-                  //         name: "screen:$productId",
-                  //       ),
-                  //     ];
-                  //   },
-                  // );
                 },
               );
             },

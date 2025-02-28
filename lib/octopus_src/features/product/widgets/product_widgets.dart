@@ -24,13 +24,29 @@ class _ProductWidgetsState extends State<ProductWidgets> {
         actions: [
           IconButton(
             onPressed: () {
-              AppNavigator.change(context, (pages) => [pages.first]); // navigate to the first page
+              Octopus.maybeOf(context)?.setState(
+                (states) {
+                  return states
+                    ..children.removeRange(
+                      1,
+                      states.children.length,
+                    ); // navigate to the first page
+                },
+              );
             },
             icon: Icon(Icons.shortcut),
           ),
           IconButton(
             onPressed: () {
-              AppNavigator.change(context, (pages) => [pages.first]); // navigate to the first page
+              Octopus.maybeOf(context)?.setState(
+                (states) {
+                  return states
+                    ..children.removeRange(
+                      0,
+                      states.children.length - 1,
+                    ); // navigate to the last page
+                },
+              );
             },
             icon: Icon(Icons.home),
           ),
@@ -45,6 +61,7 @@ class _ProductWidgetsState extends State<ProductWidgets> {
               children: pages.mapIndexed((index, page) {
                 return TextButton(
                   onPressed: () {
+                    Octopus.maybeOf(context)?.navigate(page.state.location);
                     // Octopus.maybeOf(context)?.setState(
                     //   (state) {
                     //     return state..findAllByName(page.state.uri.path);
