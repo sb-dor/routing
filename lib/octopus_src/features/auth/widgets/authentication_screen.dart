@@ -23,12 +23,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           onPressed: () {
             context.read<AuthController>().authenticate(
               navigate: () {
-                if (!mounted) return;
-                context.octopus.setState((states) {
-                  return states
-                    ..clear()
-                    ..add(AppRoute.catalog.node());
-                });
+                // if you want to show authentication screen remove comments
+                // if (!mounted) return;
+                // context.octopus.setState((states) {
+                //   return states;
+                // });
               },
             );
           },

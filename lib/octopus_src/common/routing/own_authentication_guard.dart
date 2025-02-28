@@ -59,7 +59,6 @@ class OwnAuthenticationGuard extends OctopusGuard {
     Map<String, Object?> context,
   ) async {
     final user = await _getUser(); // Get the current user.
-    print("check every yime user on auth: $user | ${state.children}");
 
     final hasGuardedRoutes = state.children.any(
       (child) => _guardedRoutes.contains(child.name),

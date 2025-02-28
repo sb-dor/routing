@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
+import 'package:routing/octopus_src/common/routing/routes.dart';
 import 'package:routing/src/common/routing/app_navigator.dart';
 
 class ProductWidgets extends StatefulWidget {
@@ -41,9 +42,9 @@ class _ProductWidgetsState extends State<ProductWidgets> {
               Octopus.maybeOf(context)?.setState(
                 (states) {
                   return states
-                    ..children.removeRange(
-                      0,
-                      states.children.length - 1,
+                    ..clear()
+                    ..add(
+                      AppRoute.catalog.node(),
                     ); // navigate to the last page
                 },
               );

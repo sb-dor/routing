@@ -7,10 +7,12 @@ import 'package:routing/octopus_src/common/models/user.dart';
 import 'package:routing/octopus_src/common/routing/authentication_guard.dart';
 import 'package:routing/octopus_src/common/routing/products_guard.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
+import 'package:routing/octopus_src/common/shared_preferences_helper/shared_preferences_helper.dart';
 import 'package:routing/octopus_src/features/auth/controllers/auth_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/routing/own_authentication_guard.dart';
-import 'common/routing/own_authentication_with_last_route_saving.dart';
+import 'common/routing/own_authentication_guard_with_signin_navigation.dart';
 
 // more info for configuring routes:
 
@@ -24,8 +26,14 @@ import 'common/routing/own_authentication_with_last_route_saving.dart';
 // https://github.com/PlugFox/octopus/blob/master/example/lib/src/feature/authentication/model/user.dart
 
 void main() => runZonedGuarded(
-      () {
-        runApp(App());
+      () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        final sharedPrefer = await SharedPreferences.getInstance();
+        runApp(
+          App(
+            sharedPreferences: sharedPrefer,
+          ),
+        );
       },
       (error, stackTrace) {
         l.e("error: $error", stackTrace);
@@ -33,19 +41,31 @@ void main() => runZonedGuarded(
     );
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({
+    super.key,
+    required this.sharedPreferences,
+  });
+
+  final SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AuthController(),
-      child: _AppConfig(),
+      child: _AppConfig(
+        sharedPreferences: sharedPreferences,
+      ),
     );
   }
 }
 
 class _AppConfig extends StatefulWidget {
-  const _AppConfig({super.key});
+  const _AppConfig({
+    super.key,
+    required this.sharedPreferences,
+  });
+
+  final SharedPreferences sharedPreferences;
 
   @override
   State<_AppConfig> createState() => _AppConfigState();
@@ -74,12 +94,13 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
       routes: AppRoute.values,
       defaultRoute: AppRoute.catalog,
       guards: [
-        OwnAuthenticationWithLastRouteSaving(
+        OwnAuthenticationGuardWithSignInNavigation(
           // Get current user from authentication controller.
           getUser: () async => context.read<AuthController>().user,
           // Available routes for non authenticated user.
           // in with these routes non authenticated user can navigate to
           guardedRoutes: {
+            // AppRoute.authentication.name,
             // AppRoute.catalog.name,
             // AppRoute.category.name,
             AppRoute.product.name // only product screen is for authenticated users. Guarded route
@@ -88,6 +109,7 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
           signingNavigation: OctopusState.single(AppRoute.authentication.node()),
           homeNavigation: OctopusState.single(AppRoute.catalog.node()),
           refresh: context.read<AuthController>(),
+          sharedPrefer: SharedPreferencesHelper(widget.sharedPreferences),
         ),
       ],
     );

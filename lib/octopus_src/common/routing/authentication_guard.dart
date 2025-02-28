@@ -4,20 +4,18 @@ import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
 
 /// A router guard that checks if the user is authenticated.
-///
-/// you can rewrite this logic of checking by your own code here
 class AuthenticationGuard extends OctopusGuard {
   AuthenticationGuard({
     required FutureOr<User> Function() getUser,
     required Set<String> routes,
-    required OctopusState signingNavigation,
+    required OctopusState signinNavigation,
     required OctopusState homeNavigation,
     OctopusState? lastNavigation,
     super.refresh,
   })  : _getUser = getUser,
         _routes = routes,
         _lastNavigation = lastNavigation ?? homeNavigation,
-        _signingNavigation = signingNavigation {
+        _signinNavigation = signinNavigation {
     // Get the last navigation from the platform default route.
     if (lastNavigation == null) {
       try {
@@ -39,18 +37,11 @@ class AuthenticationGuard extends OctopusGuard {
   final Set<String> _routes;
 
   /// The navigation to use when the user is not authenticated.
-  final OctopusState _signingNavigation;
+  final OctopusState _signinNavigation;
 
   /// The navigation to use when the user is authenticated.
   OctopusState _lastNavigation;
 
-  // logic works in this way: when you want to navigate to specific route which was added
-  // inside guarded routes,
-  // first it checks if user authenticated, if he was authenticated he will be redirected to that route
-  // if he wasn't, logic removes all other routes which were not added for all users (non/authenticated) users
-  // and rejects redirecting to that route.
-  // if here was somewhere else before routing to the route (which he should be authenticated before routing)
-  // he will stay in that route, if he wasn't somewhere he will be redirected to authentication route
   @override
   FutureOr<OctopusState> call(
     List<OctopusHistoryEntry> history,
@@ -59,7 +50,6 @@ class AuthenticationGuard extends OctopusGuard {
   ) async {
     final user = await _getUser(); // Get the current user.
     context['user'] = user; // Save the user in the context.
-    print("check every yime user on auth: $user | ${state.children}");
     final isAuthNav = state.children.any((child) => _routes.contains(child.name));
     if (isAuthNav) {
       // New state is an authentication navigation.
@@ -74,9 +64,9 @@ class AuthenticationGuard extends OctopusGuard {
         // User not authenticated.
         // Remove any navigation that is not an authentication navigation.
         state.removeWhere((child) => !_routes.contains(child.name));
-        // Add the signing navigation if the state is empty.
-        // Or return the state if it contains the signing navigation.
-        return _signingNavigation; //state.isEmpty ? _signingNavigation : state;
+        // Add the signin navigation if the state is empty.
+        // Or return the state if it contains the signin navigation.
+        return state.isEmpty ? _signinNavigation : state;
       }
     } else {
       // New state is not an authentication navigation.
@@ -87,8 +77,8 @@ class AuthenticationGuard extends OctopusGuard {
         return super.call(history, state, context);
       } else {
         // User not authenticated.
-        // Replace the current navigation with the signing navigation.
-        return _signingNavigation;
+        // Replace the current navigation with the signin navigation.
+        return _signinNavigation;
       }
     }
   }
