@@ -1,30 +1,24 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
-import 'package:routing/octopus_src/common/shared_preferences_helper/shared_preferences_helper.dart';
 
 /// A router guard that checks if the user is authenticated.
 ///
 /// you can rewrite this logic of checking by your own code here
 /// Guard that does not allow to navigate to another route until user authenticates
-///
-/// NOT GOOD ENOUGH!
-class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
-  OwnAuthenticationGuardWithSignInNavigation({
+class OwnAuthenticationGuardWithSigninNavigation extends OctopusGuard {
+  OwnAuthenticationGuardWithSigninNavigation({
     required FutureOr<User> Function() getUser,
     required Set<String> guardedRoutes,
-    required OctopusState signingNavigation,
+    required OctopusState signInNavigation,
     required OctopusState homeNavigation,
-    required SharedPreferencesHelper sharedPrefer,
     super.refresh,
   })  : _getUser = getUser,
         _guardedRoutes = guardedRoutes,
-        _signingNavigation = signingNavigation,
-        _homeNavigation = homeNavigation,
-        _sharedPreferencesHelper = sharedPrefer;
+        _signInNavigation = signInNavigation,
+        _homeNavigation = homeNavigation;
 
   /// Get the current user.
   final FutureOr<User> Function() _getUser;
@@ -32,12 +26,11 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
   /// Routes names that stand for the authentication routes.
   final Set<String> _guardedRoutes;
 
-  /// The navigation to use when the user is not authenticated.
-  final OctopusState _signingNavigation;
+  final OctopusState _signInNavigation;
 
   final OctopusState _homeNavigation;
 
-  final SharedPreferencesHelper _sharedPreferencesHelper;
+  OctopusState? _lastNavigation;
 
   // logic works in this way: when you want to navigate to specific route which was added
   // inside guarded routes,
@@ -59,21 +52,15 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
     );
 
     if (user.isNotAuthenticated && hasGuardedRoutes) {
-      await _sharedPreferencesHelper.saveString(
-        "last_navigation",
-        jsonEncode(state.toJson()),
-      );
-      return _signingNavigation;
+      _lastNavigation = state;
+      return _signInNavigation;
     }
 
-    final lastNavigation = _sharedPreferencesHelper.getString("last_navigation");
-
-    if (lastNavigation != null) {
-      print("last nav: $lastNavigation | $state");
-      await _sharedPreferencesHelper.deleteString("last_navigation");
-      state.removeWhere((element) => element.name == AppRoute.authentication.name);
-      print("last nav 2: $lastNavigation | $state");
-      return state; // Return the stored value
+    if (user.isAuthenticated &&
+        state.isNotEmpty &&
+        state.children.length == 1 &&
+        state.children.first.name == AppRoute.authentication.name) {
+      return _lastNavigation!;
     }
 
     return state;
