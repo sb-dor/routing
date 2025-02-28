@@ -10,6 +10,7 @@ import 'package:routing/octopus_src/common/routing/routes.dart';
 import 'package:routing/octopus_src/features/auth/controllers/auth_controller.dart';
 
 import 'common/routing/own_authentication_guard.dart';
+import 'common/routing/own_authentication_with_last_route_saving.dart';
 
 // more info for configuring routes:
 
@@ -73,15 +74,15 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
       routes: AppRoute.values,
       defaultRoute: AppRoute.catalog,
       guards: [
-        OwnAuthenticationGuard(
+        OwnAuthenticationWithLastRouteSaving(
           // Get current user from authentication controller.
           getUser: () async => context.read<AuthController>().user,
           // Available routes for non authenticated user.
           // in with these routes non authenticated user can navigate to
-          routes: {
-            AppRoute.catalog.name,
-            AppRoute.category.name,
-            // AppRoute.product.name  // only product screen is for authenticated users
+          guardedRoutes: {
+            // AppRoute.catalog.name,
+            // AppRoute.category.name,
+            AppRoute.product.name // only product screen is for authenticated users. Guarded route
           },
           // Default route for non authenticated user.
           signingNavigation: OctopusState.single(AppRoute.authentication.node()),

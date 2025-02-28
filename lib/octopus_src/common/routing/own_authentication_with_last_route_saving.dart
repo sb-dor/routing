@@ -7,8 +7,8 @@ import 'package:routing/octopus_src/common/models/user.dart';
 ///
 /// you can rewrite this logic of checking by your own code here
 /// Guard that does not allow to navigate to another route until user authenticates
-class OwnAuthenticationGuard extends OctopusGuard {
-  OwnAuthenticationGuard({
+class OwnAuthenticationWithLastRouteSaving extends OctopusGuard {
+  OwnAuthenticationWithLastRouteSaving({
     required FutureOr<User> Function() getUser,
     required Set<String> guardedRoutes,
     required OctopusState signingNavigation,
@@ -54,15 +54,15 @@ class OwnAuthenticationGuard extends OctopusGuard {
   // he will stay in that route, if he wasn't somewhere he will be redirected to authentication route
   @override
   FutureOr<OctopusState> call(
-    List<OctopusHistoryEntry> history,
-    OctopusState$Mutable state,
-    Map<String, Object?> context,
-  ) async {
+      List<OctopusHistoryEntry> history,
+      OctopusState$Mutable state,
+      Map<String, Object?> context,
+      ) async {
     final user = await _getUser(); // Get the current user.
     print("check every yime user on auth: $user | ${state.children}");
 
     final hasGuardedRoutes = state.children.any(
-      (child) => _guardedRoutes.contains(child.name),
+          (child) => _guardedRoutes.contains(child.name),
     );
 
     if (user.isNotAuthenticated && hasGuardedRoutes) {

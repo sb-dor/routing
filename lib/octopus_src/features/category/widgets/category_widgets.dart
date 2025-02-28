@@ -62,7 +62,7 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
             itemBuilder: (context, index) {
               final productId = widget.category.hashCode + index;
               return ListTile(
-                title: Text("Product: $index"),
+                title: Text("Product: $index | $productId"),
                 onTap: () {
                   Octopus.maybeOf(context)?.setState(
                     (states) {
