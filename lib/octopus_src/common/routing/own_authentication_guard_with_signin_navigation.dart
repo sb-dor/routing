@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
+import 'package:routing/octopus_src/main.dart';
 
 /// A router guard that checks if the user is authenticated.
 ///
@@ -61,6 +62,10 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
         state.children.first.name == AppRoute.authentication.name) {
       return _lastNavigation ?? _homeNavigation;
     }
+
+    state.removeWhere((child) {
+      return child.name == AppRoute.authentication.name;
+    });
 
     return state;
   }
