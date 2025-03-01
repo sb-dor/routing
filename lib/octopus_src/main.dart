@@ -105,6 +105,9 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
             // AppRoute.category.name,
             AppRoute.product.name // only product screen is for authenticated users. Guarded route
           },
+          authenticationScreensNames: <String>{
+            AppRoute.authentication.name,
+          },
           // Default route for non authenticated user.
           signInNavigation: OctopusState.single(AppRoute.authentication.node()),
           homeNavigation: OctopusState.single(AppRoute.catalog.node()),

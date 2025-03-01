@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
-import 'package:routing/octopus_src/main.dart';
 
 /// A router guard that checks if the user is authenticated.
 ///
@@ -14,17 +13,21 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
     required Set<String> guardedRoutes,
     required OctopusState signInNavigation,
     required OctopusState homeNavigation,
+    required Set<String> authenticationScreensNames,
     super.refresh,
   })  : _getUser = getUser,
         _guardedRoutes = guardedRoutes,
         _signInNavigation = signInNavigation,
-        _homeNavigation = homeNavigation;
+        _homeNavigation = homeNavigation,
+        _authenticationScreensNames = authenticationScreensNames;
 
   /// Get the current user.
   final FutureOr<User> Function() _getUser;
 
   /// Routes names that stand for the authentication routes.
   final Set<String> _guardedRoutes;
+
+  final Set<String> _authenticationScreensNames;
 
   final OctopusState _signInNavigation;
 
@@ -59,7 +62,7 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
     if (user.isAuthenticated &&
         state.isNotEmpty &&
         state.children.length == 1 &&
-        state.children.first.name == AppRoute.authentication.name) {
+        _authenticationScreensNames.contains(state.children.first.name)) {
       return _lastNavigation ?? _homeNavigation;
     }
 

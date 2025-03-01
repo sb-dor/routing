@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
 import 'package:provider/provider.dart';
 import 'package:routing/todo_octopus_src/common/router/todo_octopus_router.dart';
+import 'package:routing/todo_octopus_src/feature/auth/controllers/todo_auth_controller.dart';
 import 'package:routing/todo_octopus_src/feature/todos/controller/todos_controller.dart';
 import 'package:routing/todo_octopus_src/feature/todos/data/todos_datasource.dart';
 import 'package:routing/todo_octopus_src/feature/todos/data/todos_repository.dart';
@@ -24,16 +25,24 @@ class _TodosWidgetState extends State<TodosWidget> {
   }
 
   @override
-  void dispose() {
-    _todosController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Test with todos"),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              context.read<TodoAuthController>().authenticate(navigate: () {});
+            },
+            child: Text("Login"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<TodoAuthController>().logout();
+            },
+            child: Text("Logout"),
+          ),
+        ],
       ),
       body: ListenableBuilder(
         listenable: _todosController,
