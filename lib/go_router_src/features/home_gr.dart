@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:routing/go_router_src/features/cart/controller/cart_controller.dart';
 
 // https://www.youtube.com/watch?v=b6Z885Z46cU
 class HomeGr extends StatefulWidget {
@@ -27,20 +29,35 @@ class _HomeGrState extends State<HomeGr> {
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            context.go(_routes[index]);
-            setState(() {
-              _index = index;
-            });
-          },
-          items: _routes
-              .mapIndexed(
-                (mapIndex, element) => BottomNavigationBarItem(
-                  label: element,
-                  icon: Icon(Icons.route, color: mapIndex == _index ? Colors.orange : null),
-                ),
-              )
-              .toList()),
+        onTap: (int index) {
+          context.go(_routes[index]);
+          setState(() {
+            _index = index;
+          });
+        },
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: "Categories",
+            icon: Icon(
+              Icons.route,
+              color: _index == 0 ? Colors.orange : null,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "Cart",
+            icon: Badge(
+              label: Text(
+                context.watch<CartController>().cartItems.length.toString(),
+              ),
+              isLabelVisible: context.watch<CartController>().cartItems.isNotEmpty,
+              child: Icon(
+                Icons.route,
+                color: _index == 1 ? Colors.orange : null,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

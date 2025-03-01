@@ -20,13 +20,21 @@ mixin GrRouter<T extends StatefulWidget> on State<T> {
               path: "/categories",
               routes: [
                 GoRoute(
-                  path: "products/:productId",
+                  path: "products",
                   builder: (context, state) {
                     return ProductGrWidget(
-                      productId: state.pathParameters['productId'] as String,
+                      categoryId: state.uri.queryParameters['categoryId'] as String,
                     );
                   },
                 ),
+                // GoRoute(
+                //   path: "products/:categoryId",
+                //   builder: (context, state) {
+                //     return ProductGrWidget(
+                //       categoryId: state.pathParameters['categoryId'] as String,
+                //     );
+                //   },
+                // ),
               ],
               builder: (context, state) => CategoryGrWidget(),
             ),
