@@ -8,10 +8,10 @@ import 'package:routing/go_router_src/features/cart/controller/cart_controller.d
 class HomeGr extends StatefulWidget {
   const HomeGr({
     super.key,
-    required this.child,
+    required this.statefulNavigationShell,
   });
 
-  final Widget child;
+  final StatefulNavigationShell statefulNavigationShell;
 
   @override
   State<HomeGr> createState() => _HomeGrState();
@@ -27,10 +27,11 @@ class _HomeGrState extends State<HomeGr> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
+      body: widget.statefulNavigationShell,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
-          context.go(_routes[index]);
+          // context.go(_routes[index]);
+          widget.statefulNavigationShell.goBranch(index);
           setState(() {
             _index = index;
           });

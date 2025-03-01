@@ -14,39 +14,74 @@ mixin GrRouter<T extends StatefulWidget> on State<T> {
     goRouter = GoRouter(
       initialLocation: "/categories",
       routes: [
-        ShellRoute(
-          routes: [
-            GoRoute(
-              path: "/categories",
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return HomeGr(
+              statefulNavigationShell: navigationShell,
+            );
+          },
+          branches: [
+            StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: "products",
-                  builder: (context, state) {
-                    return ProductGrWidget(
-                      categoryId: state.uri.queryParameters['categoryId'] as String,
-                    );
-                  },
+                  path: "/categories",
+                  routes: [
+                    GoRoute(
+                      path: "products",
+                      builder: (context, state) {
+                        return ProductGrWidget(
+                          categoryId: state.uri.queryParameters['categoryId'] as String,
+                        );
+                      },
+                    ),
+                  ],
+                  builder: (context, state) => CategoryGrWidget(),
                 ),
-                // GoRoute(
-                //   path: "products/:categoryId",
-                //   builder: (context, state) {
-                //     return ProductGrWidget(
-                //       categoryId: state.pathParameters['categoryId'] as String,
-                //     );
-                //   },
-                // ),
               ],
-              builder: (context, state) => CategoryGrWidget(),
             ),
-            GoRoute(
-              path: "/cart",
-              builder: (context, state) => CartGrWidget(),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: "/cart",
+                  builder: (context, state) => CartGrWidget(),
+                ),
+              ],
             ),
           ],
-          builder: (context, state, child) {
-            return HomeGr(child: child);
-          },
         ),
+        // ShellRoute(
+        //   routes: [
+        //     GoRoute(
+        //       path: "/categories",
+        //       routes: [
+        //         GoRoute(
+        //           path: "products",
+        //           builder: (context, state) {
+        //             return ProductGrWidget(
+        //               categoryId: state.uri.queryParameters['categoryId'] as String,
+        //             );
+        //           },
+        //         ),
+        //         // GoRoute(
+        //         //   path: "products/:categoryId",
+        //         //   builder: (context, state) {
+        //         //     return ProductGrWidget(
+        //         //       categoryId: state.pathParameters['categoryId'] as String,
+        //         //     );
+        //         //   },
+        //         // ),
+        //       ],
+        //       builder: (context, state) => CategoryGrWidget(),
+        //     ),
+        //     GoRoute(
+        //       path: "/cart",
+        //       builder: (context, state) => CartGrWidget(),
+        //     ),
+        //   ],
+        //   builder: (context, state, child) {
+        //     return HomeGr(child: child);
+        //   },
+        // ),
       ],
     );
   }
