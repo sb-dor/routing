@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
+import 'package:provider/provider.dart';
+import 'package:routing/todo_octopus_src/common/router/todo_octopus_router.dart';
 import 'package:routing/todo_octopus_src/feature/todos/controller/todos_controller.dart';
 import 'package:routing/todo_octopus_src/feature/todos/data/todos_datasource.dart';
 import 'package:routing/todo_octopus_src/feature/todos/data/todos_repository.dart';
@@ -16,9 +19,8 @@ class _TodosWidgetState extends State<TodosWidget> {
   @override
   void initState() {
     super.initState();
-    final ITodosDatasource datasource = TodosDatasourceImpl();
-    final ITodosRepository repository = TodosRepositoryImpl(datasource);
-    _todosController = TodosController(repository);
+    _todosController = context.read<TodosController>();
+    _todosController.fetchTodos();
   }
 
   @override
@@ -37,7 +39,31 @@ class _TodosWidgetState extends State<TodosWidget> {
         listenable: _todosController,
         builder: (context, child) {
           return CustomScrollView(
-            slivers: [],
+            slivers: [
+              SliverList.separated(
+                separatorBuilder: (context, index) => SizedBox(height: 10),
+                itemCount: _todosController.todoList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(_todosController.todoList[index].name),
+                    onTap: () {
+                      Octopus.maybeOf(context)?.setState(
+                        (states) {
+                          return states
+                            ..add(
+                              TodoOctopusRouter.todo.node(
+                                arguments: {
+                                  "todoId": _todosController.todoList[index].id,
+                                },
+                              ),
+                            );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
           );
         },
       ),

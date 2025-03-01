@@ -16,7 +16,7 @@ enum TodoOctopusRouter with OctopusRoute {
   Widget builder(BuildContext context, OctopusState state, OctopusNode node) {
     return switch (this) {
       TodoOctopusRouter.todos => TodosWidget(),
-      TodoOctopusRouter.todo => TodoWidget(todoId: state.arguments['todo_id'] as String),
+      TodoOctopusRouter.todo => TodoWidget(todoId: node.arguments['todoId'] as String),
     };
   }
 }
