@@ -19,23 +19,48 @@ class HomeGr extends StatefulWidget {
 
 class _HomeGrState extends State<HomeGr> {
   int _index = 0;
-  final List<String> _routes = [
-    '/categories',
-    '/cart',
-  ];
+  DateTime? _lastTapTime;
+
+  // final List<String> _routes = [
+  //   '/categories',
+  //   '/cart',
+  // ];
+
+  void _onTap(int index) {
+    final now = DateTime.now();
+
+    if (_index == index) {
+      if (_lastTapTime != null &&
+          now.difference(_lastTapTime!) < const Duration(milliseconds: 300)) {
+        _onDoubleTap(index);
+        return;
+      }
+    }
+
+    _lastTapTime = now;
+
+    widget.statefulNavigationShell.goBranch(index);
+    setState(() {
+      _index = index;
+    });
+  }
+
+  void _onDoubleTap(int index) {
+    widget.statefulNavigationShell.goBranch(
+      index,
+      initialLocation: true,
+    );
+    setState(() {
+      _index = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.statefulNavigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (int index) {
-          // context.go(_routes[index]);
-          widget.statefulNavigationShell.goBranch(index);
-          setState(() {
-            _index = index;
-          });
-        },
+        onTap: _onTap,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             label: "Categories",
