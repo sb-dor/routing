@@ -13,4 +13,9 @@ final class TodoController with ChangeNotifier {
     todo = await _iTodoRepository.todo(id);
     notifyListeners();
   }
+
+  void saveTodo(String name) {
+    todo = todo?.copyWith(name: name);
+    notifyListeners();
+  }
 }

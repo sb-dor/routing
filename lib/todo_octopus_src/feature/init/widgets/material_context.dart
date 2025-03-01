@@ -13,12 +13,12 @@ class TodoAppMaterialContext extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TodoController>(
-          create: (_) => todoController(),
-        ),
         ChangeNotifierProvider<TodosController>(
           create: (_) => todosController(),
         ),
+        // ChangeNotifierProvider<TodoController>(
+        //   create: (_) => todoController(),
+        // ),
       ],
       child: TodoApp(),
     );
