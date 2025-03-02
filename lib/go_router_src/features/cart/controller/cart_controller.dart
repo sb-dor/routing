@@ -15,10 +15,7 @@ final class CartController with ChangeNotifier {
     final findProduct = cartItems.firstWhereOrNull((element) => element.productGr.id == product.id);
     if (findProduct != null) {
       findProduct.qty++;
-      await _iCartRepository.saveProduct(
-        findProduct.productGr.id,
-        findProduct.qty,
-      );
+      await _iCartRepository.saveProduct(cartItems);
     } else {
       final cartItem = CartGr(
         productGr: product,
@@ -26,10 +23,7 @@ final class CartController with ChangeNotifier {
         qty: 1,
       );
       cartItems.add(cartItem);
-      await _iCartRepository.saveProduct(
-        cartItem.productGr.id,
-        cartItem.qty,
-      );
+      await _iCartRepository.saveProduct(cartItems);
     }
     notifyListeners();
   }

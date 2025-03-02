@@ -1,8 +1,9 @@
 import 'package:routing/go_router_src/features/cart/data/cart_datasource.dart';
+import 'package:routing/go_router_src/features/cart/models/cart_gr.dart';
 import 'package:routing/go_router_src/features/product/models/product_gr.dart';
 
 abstract interface class ICartRepository {
-  Future<void> saveProduct(String id, double qty);
+  Future<void> saveProduct(List<CartGr> cart);
 
   Future<Map<ProductGr, double>> savedProducts();
 }
@@ -13,7 +14,7 @@ final class CartRepositoryImpl implements ICartRepository {
   final ICartDatasource _iCartDatasource;
 
   @override
-  Future<void> saveProduct(String id, double qty) => _iCartDatasource.saveProduct(id, qty);
+  Future<void> saveProduct(List<CartGr> cart) => _iCartDatasource.saveProduct(cart);
 
   @override
   Future<Map<ProductGr, double>> savedProducts() => _iCartDatasource.savedProducts();

@@ -4,9 +4,15 @@ import 'package:routing/go_router_src/common/router/gr_router.dart';
 import 'package:routing/go_router_src/features/cart/controller/cart_controller.dart';
 import 'package:routing/go_router_src/features/category/controller/category_gr_controller.dart';
 import 'package:routing/go_router_src/features/init/logic/gr_factories.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MaterialGrContextApp extends StatelessWidget {
-  const MaterialGrContextApp({super.key});
+  const MaterialGrContextApp({
+    super.key,
+    required this.sharedPreferences,
+  });
+
+  final SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class MaterialGrContextApp extends StatelessWidget {
           create: (_) => categoryGrController(),
         ),
         ChangeNotifierProvider<CartController>(
-          create: (_) => cartController(),
+          create: (_) => cartController(sharedPreferences),
         ),
       ],
       child: MaterialGrContext(),

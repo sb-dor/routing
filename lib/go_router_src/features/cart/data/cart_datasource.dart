@@ -1,21 +1,52 @@
+import 'dart:convert';
+
+import 'package:routing/go_router_src/common/utils/gr_constants.dart';
+import 'package:routing/go_router_src/features/cart/models/cart_gr.dart';
 import 'package:routing/go_router_src/features/product/models/product_gr.dart';
+import 'package:routing/octopus_src/common/shared_preferences_helper/shared_preferences_helper.dart';
 
 abstract interface class ICartDatasource {
-  Future<void> saveProduct(String id, double qty);
+  Future<void> saveProduct(List<CartGr> cart);
 
   Future<Map<ProductGr, double>> savedProducts();
 }
 
 final class CartDatasourceImpl implements ICartDatasource {
+  CartDatasourceImpl(this._sharedPreferencesHelper);
+
+  final SharedPreferencesHelper _sharedPreferencesHelper;
+
   @override
-  Future<void> saveProduct(String id, double qty) {
-    // TODO: implement saveProduct
-    throw UnimplementedError();
+  Future<void> saveProduct(List<CartGr> cart) async {
+    await _sharedPreferencesHelper.saveString(
+        'cart',
+        jsonEncode(cart
+            .map(
+              (element) => {
+                "id": element.productGr.id,
+                "price": element.price,
+                "name": element.productGr.name,
+                "qty": element.qty,
+              },
+            )
+            .toList()));
   }
 
   @override
-  Future<Map<ProductGr, double>> savedProducts() {
-    // TODO: implement savedProducts
-    throw UnimplementedError();
+  Future<Map<ProductGr, double>> savedProducts() async {
+    final savedProducts = _sharedPreferencesHelper.getString("cart") ?? '';
+    if (savedProducts.isNotEmpty) {
+      final decodeProducts = jsonDecode(savedProducts) as List;
+      final Map<ProductGr, double> result = {};
+      for (final each in decodeProducts) {
+        result[ProductGr(
+          id: each['id'],
+          name: each['name'],
+          price: each['price'],
+        )] = each['qty'];
+      }
+      return result;
+    }
+    return <ProductGr, double>{};
   }
 }
