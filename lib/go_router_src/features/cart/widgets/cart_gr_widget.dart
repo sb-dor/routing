@@ -16,6 +16,7 @@ class _CartGrWidgetState extends State<CartGrWidget> {
   void initState() {
     super.initState();
     _cartController = context.read<CartController>();
+    _cartController.getSavedProducts();
   }
 
   @override

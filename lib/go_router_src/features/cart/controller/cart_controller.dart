@@ -11,23 +11,30 @@ final class CartController with ChangeNotifier {
 
   final List<CartGr> cartItems = [];
 
-  void addProduct(ProductGr product) {
+  void addProduct(ProductGr product) async {
     final findProduct = cartItems.firstWhereOrNull((element) => element.productGr.id == product.id);
     if (findProduct != null) {
       findProduct.qty++;
+      await _iCartRepository.saveProduct(
+        findProduct.productGr.id,
+        findProduct.qty,
+      );
     } else {
-      cartItems.add(
-        CartGr(
-          productGr: product,
-          price: product.price,
-          qty: 1,
-        ),
+      final cartItem = CartGr(
+        productGr: product,
+        price: product.price,
+        qty: 1,
+      );
+      cartItems.add(cartItem);
+      await _iCartRepository.saveProduct(
+        cartItem.productGr.id,
+        cartItem.qty,
       );
     }
     notifyListeners();
   }
 
-  void removeProduct(CartGr cartItem) {
+  void removeProduct(CartGr cartItem) async {
     final findItem = cartItems.firstWhereOrNull(
       (element) => element.productGr.id == cartItem.productGr.id,
     );
@@ -40,5 +47,22 @@ final class CartController with ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+
+  void getSavedProducts() async {
+    cartItems.clear();
+    final savedProducts = await _iCartRepository.savedProducts();
+    cartItems.addAll(
+      savedProducts.entries
+          .map(
+            (element) => CartGr(
+              productGr: element.key,
+              price: element.key.price,
+              qty: element.value,
+            ),
+          )
+          .toList(),
+    );
+    notifyListeners();
   }
 }
