@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:routing/src/common/routing/app_navigator.dart';
 
 class ProductWidgets extends StatefulWidget {
-  const ProductWidgets({
-    super.key,
-    required this.productId,
-  });
+  const ProductWidgets({super.key, required this.productId});
 
   final int productId;
 
@@ -23,13 +20,19 @@ class _ProductWidgetsState extends State<ProductWidgets> {
         actions: [
           IconButton(
             onPressed: () {
-              AppNavigator.change(context, (pages) => [pages.first]); // navigate to the first page
+              AppNavigator.change(
+                context,
+                (pages) => [pages.first],
+              ); // navigate to the first page
             },
             icon: Icon(Icons.shortcut),
           ),
           IconButton(
             onPressed: () {
-              AppNavigator.change(context, (pages) => [pages.first]); // navigate to the first page
+              AppNavigator.change(
+                context,
+                (pages) => [pages.first],
+              ); // navigate to the first page
             },
             icon: Icon(Icons.home),
           ),
@@ -40,26 +43,24 @@ class _ProductWidgetsState extends State<ProductWidgets> {
           builder: (context) {
             final pages = AppNavigator.allPages(context);
             return Wrap(
-              children: pages.mapIndexed((index, page) {
-                return TextButton(
-                  onPressed: () {
-                    AppNavigator.change(
-                      context,
-                      (pages) {
-                        List<Page<Object?>> newPages = [];
-                        for (int i = 0; i < pages.length; i++) {
-                          newPages.add(pages[i]);
-                          if (pages[i].key == page.key) {
-                            break;
+              children:
+                  pages.mapIndexed((index, page) {
+                    return TextButton(
+                      onPressed: () {
+                        AppNavigator.change(context, (pages) {
+                          List<Page<Object?>> newPages = [];
+                          for (int i = 0; i < pages.length; i++) {
+                            newPages.add(pages[i]);
+                            if (pages[i].key == page.key) {
+                              break;
+                            }
                           }
-                        }
-                        return newPages;
+                          return newPages;
+                        });
                       },
+                      child: Text((page.key as ValueKey<String>).value),
                     );
-                  },
-                  child: Text((page.key as ValueKey<String>).value),
-                );
-              }).toList(),
+                  }).toList(),
             );
           },
         ),

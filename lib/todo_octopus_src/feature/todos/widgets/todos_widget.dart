@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:routing/todo_octopus_src/common/router/todo_octopus_router.dart';
 import 'package:routing/todo_octopus_src/feature/auth/controllers/todo_auth_controller.dart';
 import 'package:routing/todo_octopus_src/feature/todos/controller/todos_controller.dart';
-import 'package:routing/todo_octopus_src/feature/todos/data/todos_datasource.dart';
-import 'package:routing/todo_octopus_src/feature/todos/data/todos_repository.dart';
 
 class TodosWidget extends StatefulWidget {
   const TodosWidget({super.key});
@@ -56,18 +54,15 @@ class _TodosWidgetState extends State<TodosWidget> {
                   return ListTile(
                     title: Text(_todosController.todoList[index].name),
                     onTap: () {
-                      Octopus.maybeOf(context)?.setState(
-                        (states) {
-                          return states
-                            ..add(
-                              TodoOctopusRouter.todo.node(
-                                arguments: {
-                                  "todoId": _todosController.todoList[index].id,
-                                },
-                              ),
-                            );
-                        },
-                      );
+                      Octopus.maybeOf(context)?.setState((states) {
+                        return states..add(
+                          TodoOctopusRouter.todo.node(
+                            arguments: {
+                              "todoId": _todosController.todoList[index].id,
+                            },
+                          ),
+                        );
+                      });
                     },
                   );
                 },

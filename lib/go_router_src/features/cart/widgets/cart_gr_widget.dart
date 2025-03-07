@@ -22,9 +22,7 @@ class _CartGrWidgetState extends State<CartGrWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cart"),
-      ),
+      appBar: AppBar(title: Text("Cart")),
       body: ListenableBuilder(
         listenable: _cartController,
         builder: (context, child) {
@@ -42,7 +40,9 @@ class _CartGrWidgetState extends State<CartGrWidget> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  subtitle: Text("Price: \$${cartItem.price.toStringAsFixed(2)}"),
+                  subtitle: Text(
+                    "Price: \$${cartItem.price.toStringAsFixed(2)}",
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -22,64 +22,54 @@ class _CatalogWidgetState extends State<CatalogWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Catalog widget"),
-      ),
+      appBar: AppBar(title: Text("Catalog widget")),
       body: ListView(
         children: [
           TextButton(
             onPressed: () {
-              AppNavigator.change(
-                context,
-                (pages) {
-                  // use previous pages if you want or add new pages to stack
-                  return [
-                    ...pages, // using prev pages
-                    MaterialPage(
-                      key: ValueKey<String>("Category#plumbings"),
-                      child: CategoryWidgets(category: "Plumbings"),
-                      name: "Plumbings",
-                    ),
-                  ];
-                },
-              );
+              AppNavigator.change(context, (pages) {
+                // use previous pages if you want or add new pages to stack
+                return [
+                  ...pages, // using prev pages
+                  MaterialPage(
+                    key: ValueKey<String>("Category#plumbings"),
+                    child: CategoryWidgets(category: "Plumbings"),
+                    name: "Plumbings",
+                  ),
+                ];
+              });
             },
             child: Text("Plumbings"),
           ),
           TextButton(
             onPressed: () {
-              AppNavigator.change(
-                context,
-                (pages) {
-                  // use previous pages if you want or add new pages to stack
-                  return [
-                    ...pages, // using prev pages
-                    MaterialPage(
-                      key: ValueKey<String>("Category#portables"),
-                      child: CategoryWidgets(category: "Portables"),
-                      name: "Portables",
-                    ),
-                  ];
-                },
-              );
+              AppNavigator.change(context, (pages) {
+                // use previous pages if you want or add new pages to stack
+                return [
+                  ...pages, // using prev pages
+                  MaterialPage(
+                    key: ValueKey<String>("Category#portables"),
+                    child: CategoryWidgets(category: "Portables"),
+                    name: "Portables",
+                  ),
+                ];
+              });
             },
             child: Text("Portables"),
           ),
           TextButton(
             onPressed: () {
-              AppNavigator.change(
-                context,
-                (pages) {
-                  // use previous pages if you want or add new pages to stack
-                  return [
-                    ...pages, // using prev pages
-                    MaterialPage(
-                        key: ValueKey<String>("Category#electronics"),
-                        child: CategoryWidgets(category: "Electronics"),
-                        name: "Electronics"),
-                  ];
-                },
-              );
+              AppNavigator.change(context, (pages) {
+                // use previous pages if you want or add new pages to stack
+                return [
+                  ...pages, // using prev pages
+                  MaterialPage(
+                    key: ValueKey<String>("Category#electronics"),
+                    child: CategoryWidgets(category: "Electronics"),
+                    name: "Electronics",
+                  ),
+                ];
+              });
             },
             child: Text("Electronics"),
           ),
@@ -87,9 +77,7 @@ class _CatalogWidgetState extends State<CatalogWidget> {
             onPressed: () {
               _increment();
             },
-            child: Text(
-              "$_counter",
-            ),
+            child: Text("$_counter"),
           ),
         ],
       ),

@@ -16,9 +16,7 @@ mixin GrRouter<T extends StatefulWidget> on State<T> {
       routes: [
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
-            return HomeGr(
-              statefulNavigationShell: navigationShell,
-            );
+            return HomeGr(statefulNavigationShell: navigationShell);
           },
           branches: [
             StatefulShellBranch(
@@ -30,7 +28,8 @@ mixin GrRouter<T extends StatefulWidget> on State<T> {
                       path: "products",
                       builder: (context, state) {
                         return ProductGrWidget(
-                          categoryId: state.uri.queryParameters['categoryId'] as String,
+                          categoryId:
+                              state.uri.queryParameters['categoryId'] as String,
                         );
                       },
                     ),

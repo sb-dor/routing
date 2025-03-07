@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 final class TodoTextStateController with ChangeNotifier {
-  TodoTextStateController({
-    required final TextEditingController controller,
-  }) : _textEditingController = controller {
+  TodoTextStateController({required final TextEditingController controller})
+    : _textEditingController = controller {
     _textEditingController.addListener(_listener);
   }
 

@@ -5,9 +5,5 @@ final class CartGr {
   final double price;
   double qty;
 
-  CartGr({
-    required this.productGr,
-    required this.price,
-    required this.qty,
-  });
+  CartGr({required this.productGr, required this.price, required this.qty});
 }

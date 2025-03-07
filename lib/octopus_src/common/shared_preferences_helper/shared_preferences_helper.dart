@@ -10,5 +10,6 @@ final class SharedPreferencesHelper {
 
   String? getString(String key) => _sharedPreferences.getString(key);
 
-  Future<void> deleteString(String key) async => await _sharedPreferences.remove(key);
+  Future<void> deleteString(String key) async =>
+      await _sharedPreferences.remove(key);
 }

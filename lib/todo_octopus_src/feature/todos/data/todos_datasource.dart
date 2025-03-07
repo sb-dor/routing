@@ -1,4 +1,3 @@
-import 'package:faker/faker.dart';
 import 'package:routing/todo_octopus_src/common/constants.dart';
 import 'package:routing/todo_octopus_src/common/models/todo.dart';
 

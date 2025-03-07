@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/models/user.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
@@ -15,10 +14,10 @@ class OwnAuthenticationGuard extends OctopusGuard {
     required OctopusState signInNavigation,
     required OctopusState homeNavigation,
     super.refresh,
-  })  : _getUser = getUser,
-        _guardedRoutes = guardedRoutes,
-        _signInNavigation = signInNavigation,
-        _homeNavigation = homeNavigation;
+  }) : _getUser = getUser,
+       _guardedRoutes = guardedRoutes,
+       _signInNavigation = signInNavigation,
+       _homeNavigation = homeNavigation;
 
   /// Get the current user.
   final FutureOr<User> Function() _getUser;

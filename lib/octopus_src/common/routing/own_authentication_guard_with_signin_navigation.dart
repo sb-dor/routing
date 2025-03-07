@@ -15,11 +15,11 @@ class OwnAuthenticationGuardWithSignInNavigation extends OctopusGuard {
     required OctopusState homeNavigation,
     required Set<String> authenticationScreensNames,
     super.refresh,
-  })  : _getUser = getUser,
-        _guardedRoutes = guardedRoutes,
-        _signInNavigation = signInNavigation,
-        _homeNavigation = homeNavigation,
-        _authenticationScreensNames = authenticationScreensNames;
+  }) : _getUser = getUser,
+       _guardedRoutes = guardedRoutes,
+       _signInNavigation = signInNavigation,
+       _homeNavigation = homeNavigation,
+       _authenticationScreensNames = authenticationScreensNames;
 
   /// Get the current user.
   final FutureOr<User> Function() _getUser;

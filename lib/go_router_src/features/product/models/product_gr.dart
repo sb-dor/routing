@@ -3,9 +3,5 @@ final class ProductGr {
   final String name;
   final double price;
 
-  ProductGr({
-    required this.id,
-    required this.name,
-    required this.price,
-  });
+  ProductGr({required this.id, required this.name, required this.price});
 }

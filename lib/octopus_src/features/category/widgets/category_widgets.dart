@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
-import 'package:routing/octopus_src/features/product/widgets/product_widgets.dart';
-import 'package:routing/src/common/routing/app_navigator.dart';
 
 class CategoryWidgets extends StatefulWidget {
-  const CategoryWidgets({
-    super.key,
-    required this.category,
-  });
+  const CategoryWidgets({super.key, required this.category});
 
   final String category;
 
@@ -20,13 +15,10 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Category widget: ${widget.category}"),
-      ),
+      appBar: AppBar(title: Text("Category widget: ${widget.category}")),
       body: CustomScrollView(
         slivers: [
           // sub categories //
-
           SliverList.builder(
             itemCount: 10,
             itemBuilder: (context, index) {
@@ -34,29 +26,21 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
               return ListTile(
                 title: Text("Sub category: $subcategoryId"),
                 onTap: () {
-                  Octopus.maybeOf(context)?.setState(
-                    (states) {
-                      return states
-                        ..add(
-                          AppRoute.category.node(
-                            arguments: {
-                              "categoryId": subcategoryId,
-                            },
-                          ),
-                        );
-                    },
-                  );
+                  Octopus.maybeOf(context)?.setState((states) {
+                    return states..add(
+                      AppRoute.category.node(
+                        arguments: {"categoryId": subcategoryId},
+                      ),
+                    );
+                  });
                 },
               );
             },
           ),
 
-          SliverToBoxAdapter(
-            child: Divider(),
-          ),
+          SliverToBoxAdapter(child: Divider()),
 
           // products //
-
           SliverList.builder(
             itemCount: 10,
             itemBuilder: (context, index) {
@@ -64,16 +48,13 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
               return ListTile(
                 title: Text("Product: $index | $productId"),
                 onTap: () {
-                  Octopus.maybeOf(context)?.setState(
-                    (states) {
-                      return states
-                        ..add(
-                          AppRoute.product.node(
-                            arguments: {"productId": productId.toString()},
-                          ),
-                        );
-                    },
-                  );
+                  Octopus.maybeOf(context)?.setState((states) {
+                    return states..add(
+                      AppRoute.product.node(
+                        arguments: {"productId": productId.toString()},
+                      ),
+                    );
+                  });
                 },
               );
             },

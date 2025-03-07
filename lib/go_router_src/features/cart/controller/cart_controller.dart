@@ -12,16 +12,14 @@ final class CartController with ChangeNotifier {
   final List<CartGr> cartItems = [];
 
   void addProduct(ProductGr product) async {
-    final findProduct = cartItems.firstWhereOrNull((element) => element.productGr.id == product.id);
+    final findProduct = cartItems.firstWhereOrNull(
+      (element) => element.productGr.id == product.id,
+    );
     if (findProduct != null) {
       findProduct.qty++;
       await _iCartRepository.saveProduct(cartItems);
     } else {
-      final cartItem = CartGr(
-        productGr: product,
-        price: product.price,
-        qty: 1,
-      );
+      final cartItem = CartGr(productGr: product, price: product.price, qty: 1);
       cartItems.add(cartItem);
       await _iCartRepository.saveProduct(cartItems);
     }

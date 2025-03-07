@@ -1,8 +1,3 @@
-import 'dart:async';
-
-import 'package:octopus/octopus.dart';
-import 'package:routing/octopus_src/common/routing/routes.dart';
-
 // final class ProductsGuard extends OctopusGuard {
 //   static final String _productsName = AppRoute.product.name;
 //

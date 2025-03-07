@@ -10,9 +10,7 @@ final class ProductGrDatasourceImpl implements IProductGrDatasource {
   @override
   Future<List<ProductGr>> products(String categoryId) async {
     return categories
-            .firstWhereOrNull(
-              (category) => category.id == categoryId,
-            )
+            .firstWhereOrNull((category) => category.id == categoryId)
             ?.products ??
         <ProductGr>[];
   }

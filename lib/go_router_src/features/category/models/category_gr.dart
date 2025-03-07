@@ -5,9 +5,5 @@ final class CategoryGr {
   final String name;
   final List<ProductGr> products;
 
-  CategoryGr({
-    required this.id,
-    required this.name,
-    required this.products,
-  });
+  CategoryGr({required this.id, required this.name, required this.products});
 }

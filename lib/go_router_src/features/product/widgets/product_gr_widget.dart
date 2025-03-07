@@ -5,10 +5,7 @@ import 'package:routing/go_router_src/features/init/logic/gr_factories.dart';
 import 'package:routing/go_router_src/features/product/controller/product_gr_controller.dart';
 
 class ProductGrWidget extends StatefulWidget {
-  const ProductGrWidget({
-    super.key,
-    required this.categoryId,
-  });
+  const ProductGrWidget({super.key, required this.categoryId});
 
   final String categoryId;
 

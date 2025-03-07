@@ -6,17 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final class AppGrRunner {
   Future<void> init() async {
-    await runZonedGuarded(
-      () async {
-        WidgetsFlutterBinding.ensureInitialized();
-        final sharedPreferences = await SharedPreferences.getInstance();
-        runApp(
-          MaterialGrContextApp(
-            sharedPreferences: sharedPreferences,
-          ),
-        );
-      },
-      (error, stackStrace) {},
-    );
+    await runZonedGuarded(() async {
+      WidgetsFlutterBinding.ensureInitialized();
+      final sharedPreferences = await SharedPreferences.getInstance();
+      runApp(MaterialGrContextApp(sharedPreferences: sharedPreferences));
+    }, (error, stackStrace) {});
   }
 }

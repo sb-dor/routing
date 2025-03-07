@@ -6,16 +6,15 @@ class TodoAuthenticationScreen extends StatefulWidget {
   const TodoAuthenticationScreen({super.key});
 
   @override
-  State<TodoAuthenticationScreen> createState() => _TodoAuthenticationScreenState();
+  State<TodoAuthenticationScreen> createState() =>
+      _TodoAuthenticationScreenState();
 }
 
 class _TodoAuthenticationScreenState extends State<TodoAuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Authentication"),
-      ),
+      appBar: AppBar(title: Text("Authentication")),
       body: Center(
         child: TextButton(
           onPressed: () {
@@ -29,9 +28,7 @@ class _TodoAuthenticationScreenState extends State<TodoAuthenticationScreen> {
               },
             );
           },
-          child: Text(
-            "Authenticate",
-          ),
+          child: Text("Authenticate"),
         ),
       ),
     );

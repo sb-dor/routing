@@ -2,13 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
-import 'package:routing/src/common/routing/app_navigator.dart';
 
 class ProductWidgets extends StatefulWidget {
-  const ProductWidgets({
-    super.key,
-    required this.productId,
-  });
+  const ProductWidgets({super.key, required this.productId});
 
   final int productId;
 
@@ -25,29 +21,23 @@ class _ProductWidgetsState extends State<ProductWidgets> {
         actions: [
           IconButton(
             onPressed: () {
-              Octopus.maybeOf(context)?.setState(
-                (states) {
-                  return states
-                    ..children.removeRange(
-                      1,
-                      states.children.length,
-                    ); // navigate to the first page
-                },
-              );
+              Octopus.maybeOf(context)?.setState((states) {
+                return states
+                  ..children.removeRange(
+                    1,
+                    states.children.length,
+                  ); // navigate to the first page
+              });
             },
             icon: Icon(Icons.shortcut),
           ),
           IconButton(
             onPressed: () {
-              Octopus.maybeOf(context)?.setState(
-                (states) {
-                  return states
-                    ..clear()
-                    ..add(
-                      AppRoute.catalog.node(),
-                    ); // navigate to the last page
-                },
-              );
+              Octopus.maybeOf(context)?.setState((states) {
+                return states
+                  ..clear()
+                  ..add(AppRoute.catalog.node()); // navigate to the last page
+              });
             },
             icon: Icon(Icons.home),
           ),
@@ -59,19 +49,20 @@ class _ProductWidgetsState extends State<ProductWidgets> {
             final pages = Octopus.maybeOf(context)?.history ?? [];
             return Wrap(
               spacing: 10,
-              children: pages.mapIndexed((index, page) {
-                return TextButton(
-                  onPressed: () {
-                    Octopus.maybeOf(context)?.navigate(page.state.location);
-                    // Octopus.maybeOf(context)?.setState(
-                    //   (state) {
-                    //     return state..findAllByName(page.state.uri.path);
-                    //   },
-                    // );
-                  },
-                  child: Text(page.state.location),
-                );
-              }).toList(),
+              children:
+                  pages.mapIndexed((index, page) {
+                    return TextButton(
+                      onPressed: () {
+                        Octopus.maybeOf(context)?.navigate(page.state.location);
+                        // Octopus.maybeOf(context)?.setState(
+                        //   (state) {
+                        //     return state..findAllByName(page.state.uri.path);
+                        //   },
+                        // );
+                      },
+                      child: Text(page.state.location),
+                    );
+                  }).toList(),
             );
           },
         ),

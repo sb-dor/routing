@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:octopus/octopus.dart';
 import 'package:provider/provider.dart';
-import 'package:routing/octopus_src/common/routing/routes.dart';
 import 'package:routing/octopus_src/features/auth/controllers/auth_controller.dart';
 
 class AuthenticationScreen extends StatefulWidget {
@@ -15,9 +13,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Authentication"),
-      ),
+      appBar: AppBar(title: Text("Authentication")),
       body: Center(
         child: TextButton(
           onPressed: () {
@@ -31,9 +27,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               },
             );
           },
-          child: Text(
-            "Authenticate",
-          ),
+          child: Text("Authenticate"),
         ),
       ),
     );

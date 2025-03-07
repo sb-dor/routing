@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:routing/go_router_src/common/utils/gr_constants.dart';
 import 'package:routing/go_router_src/features/cart/models/cart_gr.dart';
 import 'package:routing/go_router_src/features/product/models/product_gr.dart';
 import 'package:routing/octopus_src/common/shared_preferences_helper/shared_preferences_helper.dart';
@@ -22,8 +21,9 @@ final class CartDatasourceImpl implements ICartDatasource {
   Future<void> saveProduct(List<CartGr> cart) async {
     await _sharedPreferencesHelper.deleteString(_cartKey);
     await _sharedPreferencesHelper.saveString(
-        _cartKey,
-        jsonEncode(cart
+      _cartKey,
+      jsonEncode(
+        cart
             .map(
               (element) => {
                 "id": element.productGr.id,
@@ -32,7 +32,9 @@ final class CartDatasourceImpl implements ICartDatasource {
                 "qty": element.qty,
               },
             )
-            .toList()));
+            .toList(),
+      ),
+    );
   }
 
   @override
@@ -43,10 +45,11 @@ final class CartDatasourceImpl implements ICartDatasource {
       final Map<ProductGr, double> result = {};
       for (final each in decodeProducts) {
         result[ProductGr(
-          id: each['id'],
-          name: each['name'],
-          price: each['price'],
-        )] = each['qty'];
+              id: each['id'],
+              name: each['name'],
+              price: each['price'],
+            )] =
+            each['qty'];
       }
       return result;
     }

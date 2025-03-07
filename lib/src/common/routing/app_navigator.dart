@@ -2,10 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppNavigator extends StatefulWidget {
-  const AppNavigator({
-    super.key,
-    required this.initialPages,
-  });
+  const AppNavigator({super.key, required this.initialPages});
 
   static _AppNavigatorState? maybeOf(BuildContext context) =>
       context.findAncestorStateOfType<_AppNavigatorState>();
@@ -16,14 +13,18 @@ class AppNavigator extends StatefulWidget {
   /// he wants to push to another one we have to send him current [pages],
   /// if he wants to push with current [pages] he will use those [pages]
   /// otherwise he will just add new [pages] in stack
-  static void change(BuildContext context, List<Page<Object?>> Function(List<Page<Object?>>) fn) {
+  static void change(
+    BuildContext context,
+    List<Page<Object?>> Function(List<Page<Object?>>) fn,
+  ) {
     context.findAncestorStateOfType<_AppNavigatorState>()?.change(fn);
   }
 
   /// for getting all pages
   /// you can to something with these pages, for ex: create breadcrumbs
   static List<Page<Object?>> allPages(BuildContext context) {
-    return context.findAncestorStateOfType<_AppNavigatorState>()?._pages ?? <Page<Object?>>[];
+    return context.findAncestorStateOfType<_AppNavigatorState>()?._pages ??
+        <Page<Object?>>[];
   }
 
   final List<Page<Object?>> initialPages;

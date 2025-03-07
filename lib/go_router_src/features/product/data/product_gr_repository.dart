@@ -12,5 +12,6 @@ final class ProductGrRepositoryImpl implements IProductGrRepository {
   final IProductGrDatasource _iProductGrDatasource;
 
   @override
-  Future<List<ProductGr>> products(String categoryId) => _iProductGrDatasource.products(categoryId);
+  Future<List<ProductGr>> products(String categoryId) =>
+      _iProductGrDatasource.products(categoryId);
 }

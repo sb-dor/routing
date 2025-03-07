@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
-import 'package:provider/provider.dart';
 import 'package:routing/todo_octopus_src/feature/init/logic/provider_factories.dart';
 import 'package:routing/todo_octopus_src/feature/todo/controller/todo_controller.dart';
 import 'package:routing/todo_octopus_src/feature/todo/controller/todo_text_state_controller.dart';
 
 class TodoWidget extends StatefulWidget {
-  const TodoWidget({
-    super.key,
-    required this.todoId,
-  });
+  const TodoWidget({super.key, required this.todoId});
 
   final String todoId;
 
@@ -25,7 +21,9 @@ class _TodoWidgetState extends State<TodoWidget> {
   @override
   void initState() {
     super.initState();
-    _textStateController = TodoTextStateController(controller: _todoTextController);
+    _textStateController = TodoTextStateController(
+      controller: _todoTextController,
+    );
     _todoController = todoController();
     _todoController.fetchTodo(widget.todoId);
   }

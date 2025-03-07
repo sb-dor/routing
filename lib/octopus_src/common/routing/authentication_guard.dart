@@ -12,14 +12,15 @@ class AuthenticationGuard extends OctopusGuard {
     required OctopusState homeNavigation,
     OctopusState? lastNavigation,
     super.refresh,
-  })  : _getUser = getUser,
-        _routes = routes,
-        _lastNavigation = lastNavigation ?? homeNavigation,
-        _signinNavigation = signinNavigation {
+  }) : _getUser = getUser,
+       _routes = routes,
+       _lastNavigation = lastNavigation ?? homeNavigation,
+       _signinNavigation = signinNavigation {
     // Get the last navigation from the platform default route.
     if (lastNavigation == null) {
       try {
-        final platformDefault = WidgetsBinding.instance.platformDispatcher.defaultRouteName;
+        final platformDefault =
+            WidgetsBinding.instance.platformDispatcher.defaultRouteName;
         final state = OctopusState.fromLocation(platformDefault);
         if (state.isNotEmpty) {
           _lastNavigation = state;
@@ -50,7 +51,9 @@ class AuthenticationGuard extends OctopusGuard {
   ) async {
     final user = await _getUser(); // Get the current user.
     context['user'] = user; // Save the user in the context.
-    final isAuthNav = state.children.any((child) => _routes.contains(child.name));
+    final isAuthNav = state.children.any(
+      (child) => _routes.contains(child.name),
+    );
     if (isAuthNav) {
       // New state is an authentication navigation.
       if (user.isAuthenticated) {

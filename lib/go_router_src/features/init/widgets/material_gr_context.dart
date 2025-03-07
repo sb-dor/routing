@@ -7,10 +7,7 @@ import 'package:routing/go_router_src/features/init/logic/gr_factories.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MaterialGrContextApp extends StatelessWidget {
-  const MaterialGrContextApp({
-    super.key,
-    required this.sharedPreferences,
-  });
+  const MaterialGrContextApp({super.key, required this.sharedPreferences});
 
   final SharedPreferences sharedPreferences;
 

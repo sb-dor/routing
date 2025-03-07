@@ -3,7 +3,6 @@ import 'package:octopus/octopus.dart';
 import 'package:provider/provider.dart';
 import 'package:routing/octopus_src/common/routing/routes.dart';
 import 'package:routing/octopus_src/features/auth/controllers/auth_controller.dart';
-import 'package:routing/octopus_src/features/category/widgets/category_widgets.dart';
 
 class CatalogWidget extends StatefulWidget {
   const CatalogWidget({super.key});
@@ -23,18 +22,10 @@ class _CatalogWidgetState extends State<CatalogWidget> {
   }
 
   void _pushCategory(BuildContext context, String categoryId) {
-    Octopus.maybeOf(context)?.setState(
-      (state) {
-        return state
-          ..add(
-            AppRoute.category.node(
-              arguments: {
-                'categoryId': categoryId,
-              },
-            ),
-          );
-      },
-    );
+    Octopus.maybeOf(context)?.setState((state) {
+      return state
+        ..add(AppRoute.category.node(arguments: {'categoryId': categoryId}));
+    });
   }
 
   @override
@@ -51,9 +42,7 @@ class _CatalogWidgetState extends State<CatalogWidget> {
           ),
           TextButton(
             onPressed: () {
-              context.read<AuthController>().authenticate(
-                    navigate: () {},
-                  );
+              context.read<AuthController>().authenticate(navigate: () {});
             },
             child: Text("Log in"),
           ),
@@ -81,28 +70,18 @@ class _CatalogWidgetState extends State<CatalogWidget> {
           ),
           TextButton(
             onPressed: () {
-              Octopus.maybeOf(context)?.setState(
-                (states) {
-                  return states
-                    ..add(
-                      AppRoute.product.node(
-                        arguments: {"productId": "123"},
-                      ),
-                    );
-                },
-              );
+              Octopus.maybeOf(context)?.setState((states) {
+                return states
+                  ..add(AppRoute.product.node(arguments: {"productId": "123"}));
+              });
             },
-            child: Text(
-              "Products directly",
-            ),
+            child: Text("Products directly"),
           ),
           TextButton(
             onPressed: () {
               _increment();
             },
-            child: Text(
-              "$_counter",
-            ),
+            child: Text("$_counter"),
           ),
         ],
       ),

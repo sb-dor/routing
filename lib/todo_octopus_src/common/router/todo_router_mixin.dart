@@ -20,13 +20,11 @@ mixin TodoRouterMixin on State<TodoApp> {
       guards: [
         OwnAuthenticationGuardWithSignInNavigation(
           getUser: () async => context.read<TodoAuthController>().user,
-          guardedRoutes: <String>{
-            TodoOctopusRouter.todo.name,
-          },
-          authenticationScreensNames: <String>{
-            TodoOctopusRouter.todoAuth.name,
-          },
-          signInNavigation: OctopusState.single(TodoOctopusRouter.todoAuth.node()),
+          guardedRoutes: <String>{TodoOctopusRouter.todo.name},
+          authenticationScreensNames: <String>{TodoOctopusRouter.todoAuth.name},
+          signInNavigation: OctopusState.single(
+            TodoOctopusRouter.todoAuth.node(),
+          ),
           homeNavigation: OctopusState.single(TodoOctopusRouter.todos.node()),
           refresh: context.read<TodoAuthController>(),
         ),
