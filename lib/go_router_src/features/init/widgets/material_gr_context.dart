@@ -46,7 +46,7 @@ class _MaterialGrContextState extends State<MaterialGrContext> with GrRouter {
         pageTransitionsTheme: PageTransitionsTheme(
           builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
             TargetPlatform.values,
-            value: (_) => FadeUpwardsPageTransitionsBuilder(),
+            value: (_) => FadeForwardsPageTransitionsBuilder(),
           ),
         ),
       ),
