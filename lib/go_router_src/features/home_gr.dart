@@ -65,8 +65,7 @@ class _HomeGrState extends State<HomeGr> {
               label: Text(
                 context.watch<CartController>().cartItems.length.toString(),
               ),
-              isLabelVisible:
-                  context.watch<CartController>().cartItems.isNotEmpty,
+              isLabelVisible: context.watch<CartController>().cartItems.isNotEmpty,
               child: Icon(
                 Icons.route,
                 color: _index == 1 ? Colors.orange : null,

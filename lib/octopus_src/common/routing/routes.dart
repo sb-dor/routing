@@ -25,11 +25,11 @@ enum AppRoute with OctopusRoute {
     return switch (this) {
       AppRoute.catalog => CatalogWidget(),
       AppRoute.category => CategoryWidgets(
-        category: node.arguments['categoryId'].toString(),
-      ),
+          category: node.arguments['categoryId'].toString(),
+        ),
       AppRoute.product => ProductWidgets(
-        productId: int.parse("${node.arguments['productId']}"),
-      ),
+          productId: int.parse("${node.arguments['productId']}"),
+        ),
       AppRoute.authentication => AuthenticationScreen(),
     };
   }

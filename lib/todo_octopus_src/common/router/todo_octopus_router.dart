@@ -19,8 +19,8 @@ enum TodoOctopusRouter with OctopusRoute {
     return switch (this) {
       TodoOctopusRouter.todos => TodosWidget(),
       TodoOctopusRouter.todo => TodoWidget(
-        todoId: node.arguments['todoId'] as String,
-      ),
+          todoId: node.arguments['todoId'] as String,
+        ),
       TodoOctopusRouter.todoAuth => TodoAuthenticationScreen(),
     };
   }

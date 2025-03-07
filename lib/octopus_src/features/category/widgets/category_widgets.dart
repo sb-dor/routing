@@ -27,11 +27,12 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
                 title: Text("Sub category: $subcategoryId"),
                 onTap: () {
                   Octopus.maybeOf(context)?.setState((states) {
-                    return states..add(
-                      AppRoute.category.node(
-                        arguments: {"categoryId": subcategoryId},
-                      ),
-                    );
+                    return states
+                      ..add(
+                        AppRoute.category.node(
+                          arguments: {"categoryId": subcategoryId},
+                        ),
+                      );
                   });
                 },
               );
@@ -49,11 +50,12 @@ class _CategoryWidgetsState extends State<CategoryWidgets> {
                 title: Text("Product: $index | $productId"),
                 onTap: () {
                   Octopus.maybeOf(context)?.setState((states) {
-                    return states..add(
-                      AppRoute.product.node(
-                        arguments: {"productId": productId.toString()},
-                      ),
-                    );
+                    return states
+                      ..add(
+                        AppRoute.product.node(
+                          arguments: {"productId": productId.toString()},
+                        ),
+                      );
                   });
                 },
               );

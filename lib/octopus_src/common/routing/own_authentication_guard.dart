@@ -14,10 +14,10 @@ class OwnAuthenticationGuard extends OctopusGuard {
     required OctopusState signInNavigation,
     required OctopusState homeNavigation,
     super.refresh,
-  }) : _getUser = getUser,
-       _guardedRoutes = guardedRoutes,
-       _signInNavigation = signInNavigation,
-       _homeNavigation = homeNavigation;
+  })  : _getUser = getUser,
+        _guardedRoutes = guardedRoutes,
+        _signInNavigation = signInNavigation,
+        _homeNavigation = homeNavigation;
 
   /// Get the current user.
   final FutureOr<User> Function() _getUser;

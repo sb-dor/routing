@@ -49,20 +49,19 @@ class _ProductWidgetsState extends State<ProductWidgets> {
             final pages = Octopus.maybeOf(context)?.history ?? [];
             return Wrap(
               spacing: 10,
-              children:
-                  pages.mapIndexed((index, page) {
-                    return TextButton(
-                      onPressed: () {
-                        Octopus.maybeOf(context)?.navigate(page.state.location);
-                        // Octopus.maybeOf(context)?.setState(
-                        //   (state) {
-                        //     return state..findAllByName(page.state.uri.path);
-                        //   },
-                        // );
-                      },
-                      child: Text(page.state.location),
-                    );
-                  }).toList(),
+              children: pages.mapIndexed((index, page) {
+                return TextButton(
+                  onPressed: () {
+                    Octopus.maybeOf(context)?.navigate(page.state.location);
+                    // Octopus.maybeOf(context)?.setState(
+                    //   (state) {
+                    //     return state..findAllByName(page.state.uri.path);
+                    //   },
+                    // );
+                  },
+                  child: Text(page.state.location),
+                );
+              }).toList(),
             );
           },
         ),

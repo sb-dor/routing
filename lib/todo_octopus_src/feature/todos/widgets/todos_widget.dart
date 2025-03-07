@@ -55,13 +55,14 @@ class _TodosWidgetState extends State<TodosWidget> {
                     title: Text(_todosController.todoList[index].name),
                     onTap: () {
                       Octopus.maybeOf(context)?.setState((states) {
-                        return states..add(
-                          TodoOctopusRouter.todo.node(
-                            arguments: {
-                              "todoId": _todosController.todoList[index].id,
-                            },
-                          ),
-                        );
+                        return states
+                          ..add(
+                            TodoOctopusRouter.todo.node(
+                              arguments: {
+                                "todoId": _todosController.todoList[index].id,
+                              },
+                            ),
+                          );
                       });
                     },
                   );

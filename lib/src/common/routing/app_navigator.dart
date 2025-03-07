@@ -23,8 +23,7 @@ class AppNavigator extends StatefulWidget {
   /// for getting all pages
   /// you can to something with these pages, for ex: create breadcrumbs
   static List<Page<Object?>> allPages(BuildContext context) {
-    return context.findAncestorStateOfType<_AppNavigatorState>()?._pages ??
-        <Page<Object?>>[];
+    return context.findAncestorStateOfType<_AppNavigatorState>()?._pages ?? <Page<Object?>>[];
   }
 
   final List<Page<Object?>> initialPages;

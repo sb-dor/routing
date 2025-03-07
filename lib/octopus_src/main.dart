@@ -21,15 +21,15 @@ import 'common/routing/own_authentication_guard_with_signin_navigation.dart';
 // https://github.com/PlugFox/octopus/blob/master/example/lib/src/feature/authentication/model/user.dart
 
 void main() => runZonedGuarded(
-  () async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final sharedPrefer = await SharedPreferences.getInstance();
-    runApp(App(sharedPreferences: sharedPrefer));
-  },
-  (error, stackTrace) {
-    l.e("error: $error", stackTrace);
-  },
-);
+      () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        final sharedPrefer = await SharedPreferences.getInstance();
+        runApp(App(sharedPreferences: sharedPrefer));
+      },
+      (error, stackTrace) {
+        l.e("error: $error", stackTrace);
+      },
+    );
 
 class App extends StatelessWidget {
   const App({super.key, required this.sharedPreferences});
@@ -59,11 +59,10 @@ class _AppConfigState extends State<_AppConfig> with _AppRoutingWithOctopus {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _octopus.config, // coming from mixin
-      builder:
-          (context, child) => OctopusTools(
-            // for development
-            child: child!,
-          ),
+      builder: (context, child) => OctopusTools(
+        // for development
+        child: child!,
+      ),
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(
           builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
@@ -95,9 +94,7 @@ mixin _AppRoutingWithOctopus on State<_AppConfig> {
             // AppRoute.authentication.name,
             // AppRoute.catalog.name,
             // AppRoute.category.name,
-            AppRoute
-                .product
-                .name, // only product screen is for authenticated users. Guarded route
+            AppRoute.product.name, // only product screen is for authenticated users. Guarded route
           },
           authenticationScreensNames: <String>{AppRoute.authentication.name},
           // Default route for non authenticated user.

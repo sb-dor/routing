@@ -28,8 +28,7 @@ mixin GrRouter<T extends StatefulWidget> on State<T> {
                       path: "products",
                       builder: (context, state) {
                         return ProductGrWidget(
-                          categoryId:
-                              state.uri.queryParameters['categoryId'] as String,
+                          categoryId: state.uri.queryParameters['categoryId'] as String,
                         );
                       },
                     ),

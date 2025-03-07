@@ -14,10 +14,8 @@ final class CartRepositoryImpl implements ICartRepository {
   final ICartDatasource _iCartDatasource;
 
   @override
-  Future<void> saveProduct(List<CartGr> cart) =>
-      _iCartDatasource.saveProduct(cart);
+  Future<void> saveProduct(List<CartGr> cart) => _iCartDatasource.saveProduct(cart);
 
   @override
-  Future<Map<ProductGr, double>> savedProducts() =>
-      _iCartDatasource.savedProducts();
+  Future<Map<ProductGr, double>> savedProducts() => _iCartDatasource.savedProducts();
 }

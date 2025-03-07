@@ -23,8 +23,7 @@ class _CatalogWidgetState extends State<CatalogWidget> {
 
   void _pushCategory(BuildContext context, String categoryId) {
     Octopus.maybeOf(context)?.setState((state) {
-      return state
-        ..add(AppRoute.category.node(arguments: {'categoryId': categoryId}));
+      return state..add(AppRoute.category.node(arguments: {'categoryId': categoryId}));
     });
   }
 
@@ -71,8 +70,7 @@ class _CatalogWidgetState extends State<CatalogWidget> {
           TextButton(
             onPressed: () {
               Octopus.maybeOf(context)?.setState((states) {
-                return states
-                  ..add(AppRoute.product.node(arguments: {"productId": "123"}));
+                return states..add(AppRoute.product.node(arguments: {"productId": "123"}));
               });
             },
             child: Text("Products directly"),

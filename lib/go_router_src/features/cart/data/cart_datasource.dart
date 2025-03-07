@@ -45,11 +45,10 @@ final class CartDatasourceImpl implements ICartDatasource {
       final Map<ProductGr, double> result = {};
       for (final each in decodeProducts) {
         result[ProductGr(
-              id: each['id'],
-              name: each['name'],
-              price: each['price'],
-            )] =
-            each['qty'];
+          id: each['id'],
+          name: each['name'],
+          price: each['price'],
+        )] = each['qty'];
       }
       return result;
     }

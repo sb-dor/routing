@@ -6,8 +6,7 @@ class TodoAuthenticationScreen extends StatefulWidget {
   const TodoAuthenticationScreen({super.key});
 
   @override
-  State<TodoAuthenticationScreen> createState() =>
-      _TodoAuthenticationScreenState();
+  State<TodoAuthenticationScreen> createState() => _TodoAuthenticationScreenState();
 }
 
 class _TodoAuthenticationScreenState extends State<TodoAuthenticationScreen> {

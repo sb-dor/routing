@@ -43,24 +43,23 @@ class _ProductWidgetsState extends State<ProductWidgets> {
           builder: (context) {
             final pages = AppNavigator.allPages(context);
             return Wrap(
-              children:
-                  pages.mapIndexed((index, page) {
-                    return TextButton(
-                      onPressed: () {
-                        AppNavigator.change(context, (pages) {
-                          List<Page<Object?>> newPages = [];
-                          for (int i = 0; i < pages.length; i++) {
-                            newPages.add(pages[i]);
-                            if (pages[i].key == page.key) {
-                              break;
-                            }
-                          }
-                          return newPages;
-                        });
-                      },
-                      child: Text((page.key as ValueKey<String>).value),
-                    );
-                  }).toList(),
+              children: pages.mapIndexed((index, page) {
+                return TextButton(
+                  onPressed: () {
+                    AppNavigator.change(context, (pages) {
+                      List<Page<Object?>> newPages = [];
+                      for (int i = 0; i < pages.length; i++) {
+                        newPages.add(pages[i]);
+                        if (pages[i].key == page.key) {
+                          break;
+                        }
+                      }
+                      return newPages;
+                    });
+                  },
+                  child: Text((page.key as ValueKey<String>).value),
+                );
+              }).toList(),
             );
           },
         ),

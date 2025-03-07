@@ -7,13 +7,13 @@ import 'package:routing/src/features/catalog/widgets/catalog_widget.dart';
 import 'package:routing/src/features/category/widgets/category_widgets.dart';
 
 void main() => runZonedGuarded(
-  () {
-    runApp(App());
-  },
-  (error, stackTrace) {
-    l.e("error: $error", stackTrace);
-  },
-);
+      () {
+        runApp(App());
+      },
+      (error, stackTrace) {
+        l.e("error: $error", stackTrace);
+      },
+    );
 
 class App extends StatefulWidget {
   const App({super.key});
