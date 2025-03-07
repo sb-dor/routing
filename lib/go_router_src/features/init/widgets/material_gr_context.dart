@@ -42,6 +42,14 @@ class _MaterialGrContextState extends State<MaterialGrContext> with GrRouter {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: goRouter,
+      theme: ThemeData(
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+            TargetPlatform.values,
+            value: (_) => FadeUpwardsPageTransitionsBuilder(),
+          ),
+        ),
+      ),
     );
   }
 }

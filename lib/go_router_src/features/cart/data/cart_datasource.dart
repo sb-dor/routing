@@ -16,10 +16,13 @@ final class CartDatasourceImpl implements ICartDatasource {
 
   final SharedPreferencesHelper _sharedPreferencesHelper;
 
+  final String _cartKey = 'cart';
+
   @override
   Future<void> saveProduct(List<CartGr> cart) async {
+    await _sharedPreferencesHelper.deleteString(_cartKey);
     await _sharedPreferencesHelper.saveString(
-        'cart',
+        _cartKey,
         jsonEncode(cart
             .map(
               (element) => {
@@ -34,7 +37,7 @@ final class CartDatasourceImpl implements ICartDatasource {
 
   @override
   Future<Map<ProductGr, double>> savedProducts() async {
-    final savedProducts = _sharedPreferencesHelper.getString("cart") ?? '';
+    final savedProducts = _sharedPreferencesHelper.getString(_cartKey) ?? '';
     if (savedProducts.isNotEmpty) {
       final decodeProducts = jsonDecode(savedProducts) as List;
       final Map<ProductGr, double> result = {};

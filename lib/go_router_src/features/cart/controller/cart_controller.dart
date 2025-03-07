@@ -39,6 +39,7 @@ final class CartController with ChangeNotifier {
           (element) => element.productGr.id == cartItem.productGr.id,
         );
       }
+      await _iCartRepository.saveProduct(cartItems);
       notifyListeners();
     }
   }

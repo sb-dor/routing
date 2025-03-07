@@ -80,6 +80,14 @@ class _AppConfigState extends State<_AppConfig> with _AppRoutingWithOctopus {
         // for development
         child: child!,
       ),
+      theme: ThemeData(
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+            TargetPlatform.values,
+            value: (_) => FadeUpwardsPageTransitionsBuilder(),
+          ),
+        ),
+      ),
     );
   }
 }

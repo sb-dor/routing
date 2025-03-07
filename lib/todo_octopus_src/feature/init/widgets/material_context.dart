@@ -38,6 +38,14 @@ class _TodoAppState extends State<TodoApp> with TodoRouterMixin {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: todoOctopus.config,
+      theme: ThemeData(
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+            TargetPlatform.values,
+            value: (_) => FadeUpwardsPageTransitionsBuilder(),
+          ),
+        ),
+      ),
     );
   }
 }
